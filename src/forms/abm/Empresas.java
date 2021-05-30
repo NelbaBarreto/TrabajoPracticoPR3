@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forms;
+package forms.abm;
 
 import db.bdOracle;
 import forms.Login;
+import forms.MenuPrincipal;
 import models.Empresa;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -27,13 +28,13 @@ import javax.swing.DefaultListModel;
  *
  * @author Nelba Barreto
  */
-public class ABMEmpresa extends javax.swing.JPanel {
+public class Empresas extends javax.swing.JPanel {
     private final JFrame fEmpresa = new JFrame("Carga Empresa");
     private List<Empresa> empresas;
     private final bdOracle conexion;
     private String msg;
 
-    public ABMEmpresa(bdOracle bd) {
+    public Empresas(bdOracle bd) {
         conexion = bd;
         initComponents();
         lpSecondary.setSize(350, 350);
@@ -61,7 +62,7 @@ public class ABMEmpresa extends javax.swing.JPanel {
     }
     
     public void run() {
-        ABMEmpresa panel = new ABMEmpresa(conexion);
+        Empresas panel = new Empresas(conexion);
         fEmpresa.add(panel);
         fEmpresa.setSize(400, 400);
         fEmpresa.setLocationRelativeTo(null);
@@ -120,6 +121,7 @@ public class ABMEmpresa extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         lEmpresa = new javax.swing.JList<>(populateList());
         lMsg = new javax.swing.JLabel();
+        bVolver = new javax.swing.JButton();
 
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(400, 400));
@@ -129,9 +131,11 @@ public class ABMEmpresa extends javax.swing.JPanel {
         lpSecondary.setPreferredSize(new java.awt.Dimension(350, 350));
 
         lId.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lId.setLabelFor(tfId);
         lId.setText("Id Empresa");
 
         lId1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        lId1.setLabelFor(tfDescripcion);
         lId1.setText("Descripción");
 
         tfDescripcion.setBackground(new java.awt.Color(229, 232, 237));
@@ -194,6 +198,18 @@ public class ABMEmpresa extends javax.swing.JPanel {
 
         lMsg.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
 
+        bVolver.setBackground(new java.awt.Color(255, 255, 255));
+        bVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/goBack.png"))); // NOI18N
+        bVolver.setBorder(null);
+        bVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bVolver.setNextFocusableComponent(tfId);
+        bVolver.setPreferredSize(new java.awt.Dimension(30, 30));
+        bVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVolverActionPerformed(evt);
+            }
+        });
+
         lpSecondary.setLayer(lId, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(lId1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(tfDescripcion, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -203,6 +219,7 @@ public class ABMEmpresa extends javax.swing.JPanel {
         lpSecondary.setLayer(bDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(lMsg, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpSecondary.setLayer(bVolver, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lpSecondaryLayout = new javax.swing.GroupLayout(lpSecondary);
         lpSecondary.setLayout(lpSecondaryLayout);
@@ -232,11 +249,17 @@ public class ABMEmpresa extends javax.swing.JPanel {
                         .addContainerGap(18, Short.MAX_VALUE)
                         .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(lpSecondaryLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         lpSecondaryLayout.setVerticalGroup(
             lpSecondaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lpSecondaryLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(5, 5, 5)
+                .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(lpSecondaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(lpSecondaryLayout.createSequentialGroup()
                         .addComponent(lId)
@@ -254,7 +277,7 @@ public class ABMEmpresa extends javax.swing.JPanel {
                     .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -264,14 +287,14 @@ public class ABMEmpresa extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lpSecondary, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(lpSecondary, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -348,11 +371,18 @@ public class ABMEmpresa extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bCreateActionPerformed
 
+    private void bVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVolverActionPerformed
+        fEmpresa.dispose();
+        MenuPrincipal fMainMenu = new MenuPrincipal(conexion);
+        fMainMenu.run();
+    }//GEN-LAST:event_bVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCreate;
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bUpdate;
+    private javax.swing.JButton bVolver;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lEmpresa;
     private javax.swing.JLabel lId;
