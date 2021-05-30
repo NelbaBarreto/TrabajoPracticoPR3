@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabajo_practico;
+package forms;
 
+import db.bdOracle;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -18,11 +19,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class LoginScreen extends javax.swing.JPanel {
+public class Login extends javax.swing.JPanel {
     bdOracle bd = new bdOracle();
     static JFrame frame = new JFrame("Iniciar Sesión");
     
-    public LoginScreen() {
+    public Login() {
         initComponents();
         lpSecondary.setSize(350, 350);
         lpSecondary.setOpaque(true);
@@ -43,10 +44,10 @@ public class LoginScreen extends javax.swing.JPanel {
         try {
             bd.abrir(username, password);
             frame.dispose();
-            CrudEmpresa fEmpresa = new CrudEmpresa(bd);
+            ABMEmpresa fEmpresa = new ABMEmpresa(bd);
             fEmpresa.run();
         } catch (SQLException ex) {
-            Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             lError.setVisible(true);
         }
     }
@@ -69,7 +70,7 @@ public class LoginScreen extends javax.swing.JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                LoginScreen panel = new LoginScreen();
+                Login panel = new Login();
                 frame.add(panel);
                 frame.setSize(400, 400);
                 frame.setLocationRelativeTo(null);
@@ -195,7 +196,7 @@ public class LoginScreen extends javax.swing.JPanel {
 
         bSubmit.setBackground(new java.awt.Color(255, 255, 255));
         bSubmit.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        bSubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/accept.png"))); // NOI18N
+        bSubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/accept.png"))); // NOI18N
         bSubmit.setText("Aceptar");
         bSubmit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(172, 95, 200)));
         bSubmit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -208,7 +209,7 @@ public class LoginScreen extends javax.swing.JPanel {
 
         bExit.setBackground(new java.awt.Color(255, 255, 255));
         bExit.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/exit.png"))); // NOI18N
+        bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/exit.png"))); // NOI18N
         bExit.setText("Salir");
         bExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
         bExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -220,7 +221,7 @@ public class LoginScreen extends javax.swing.JPanel {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/key.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/key.png"))); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lError.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N

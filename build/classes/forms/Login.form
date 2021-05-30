@@ -278,7 +278,7 @@
               <Font name="Roboto" size="12" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/accept.png"/>
+              <Image iconType="3" name="/assets/img/accept.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Aceptar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -306,7 +306,7 @@
               <Font name="Roboto" size="12" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/exit.png"/>
+              <Image iconType="3" name="/assets/img/exit.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salir"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -329,7 +329,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/key.png"/>
+              <Image iconType="3" name="/assets/img/key.png"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>

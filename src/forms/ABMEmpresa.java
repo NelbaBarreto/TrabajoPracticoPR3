@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabajo_practico;
+package forms;
 
+import db.bdOracle;
+import forms.Login;
+import models.Empresa;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -22,15 +25,15 @@ import javax.swing.DefaultListModel;
 
 /**
  *
- * @author HP
+ * @author Nelba Barreto
  */
-public class CrudEmpresa extends javax.swing.JPanel {
+public class ABMEmpresa extends javax.swing.JPanel {
     private final JFrame fEmpresa = new JFrame("Carga Empresa");
     private List<Empresa> empresas;
     private final bdOracle conexion;
     private String msg;
 
-    public CrudEmpresa(bdOracle bd) {
+    public ABMEmpresa(bdOracle bd) {
         conexion = bd;
         initComponents();
         lpSecondary.setSize(350, 350);
@@ -58,7 +61,7 @@ public class CrudEmpresa extends javax.swing.JPanel {
     }
     
     public void run() {
-        CrudEmpresa panel = new CrudEmpresa(conexion);
+        ABMEmpresa panel = new ABMEmpresa(conexion);
         fEmpresa.add(panel);
         fEmpresa.setSize(400, 400);
         fEmpresa.setLocationRelativeTo(null);
@@ -83,7 +86,7 @@ public class CrudEmpresa extends javax.swing.JPanel {
                 i++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rowValues;
     }
@@ -299,7 +302,7 @@ public class CrudEmpresa extends javax.swing.JPanel {
             }
             setMsg(response);
         } catch (SQLException ex) {
-            Logger.getLogger(CrudEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
@@ -317,7 +320,7 @@ public class CrudEmpresa extends javax.swing.JPanel {
             }
             setMsg(response);
         } catch (SQLException ex) {
-            Logger.getLogger(CrudEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bUpdateActionPerformed
 
@@ -341,7 +344,7 @@ public class CrudEmpresa extends javax.swing.JPanel {
                 setMsg(response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CrudEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bCreateActionPerformed
 

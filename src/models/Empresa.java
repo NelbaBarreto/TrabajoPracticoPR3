@@ -1,4 +1,4 @@
-package trabajo_practico;
+package models;
 
 /**
  *
