@@ -44,8 +44,8 @@ public class Login extends javax.swing.JPanel {
         try {
             bd.abrir(username, password);
             frame.dispose();
-            ABMEmpresa fEmpresa = new ABMEmpresa(bd);
-            fEmpresa.run();
+            MenuPrincipal fMainMenu = new MenuPrincipal(bd);
+            fMainMenu.run();
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             lError.setVisible(true);
