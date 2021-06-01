@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/trabajo_practico/LoginScreen.java</file>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/trabajo_practico/Empresa.java</file>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/trabajo_practico/CrudEmpresa.java</file>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/trabajo_practico/bdOracle.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/Login.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/MenuPrincipal.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/abm/Empresas.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/abm/FacturasProv.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/db/bdOracle.java</file>
         </group>
     </open-files>
 </project-private>

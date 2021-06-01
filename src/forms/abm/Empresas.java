@@ -302,7 +302,7 @@ public class Empresas extends javax.swing.JPanel {
         if(lEmpresa.getSelectedValue() != null) {
             String descripcion = lEmpresa.getSelectedValue();
             int index = lEmpresa.getSelectedIndex();
-            String id = String.valueOf(empresas.get(index).getId_empresa());
+            String id = String.valueOf(empresas.get(index).getId());
 
             tfId.setText(id);
             tfDescripcion.setText(descripcion);
