@@ -15,17 +15,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.table.TableModel;
 import models.Empresa;
+import models.FacturaProvDet;
 
 /**
  *
@@ -96,6 +95,25 @@ public class FacturasProv extends javax.swing.JPanel {
         return rowValues;
     }
     
+    private ArrayList<FacturaProvDet> populateTable(int nroFacturaProv) {
+        ArrayList<FacturaProvDet> rowValues = new ArrayList<FacturaProvDet>();
+        try {
+            FacturaProvDet facturaProvDetalle = null;
+            String query = "SELECT fpde_item, fpde_nro_factura_prov, fpde_cod_producto, fpde_cantidad, fpde_importe "
+                    + "FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv;
+
+            ResultSet rset = conexion.sql(query);
+            while (rset.next()) {
+                facturaProvDetalle = new FacturaProvDet(rset.getInt(1), rset.getInt(2), rset.getInt(3), rset.getDouble(4), rset.getDouble(5));
+                rowValues.add(facturaProvDetalle);
+            }
+            return rowValues;
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+         
     private void setMsg(int response) {
         lMsg.setVisible(true);
         lMsg.setText(msg);
@@ -132,7 +150,7 @@ public class FacturasProv extends javax.swing.JPanel {
         lTipoFactura = new javax.swing.JLabel();
         cxTipoFactura = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tFacturaProvDet = new javax.swing.JTable();
         tfTotal = new javax.swing.JTextField();
         lEstado1 = new javax.swing.JLabel();
         bConsultar = new javax.swing.JButton();
@@ -249,7 +267,7 @@ public class FacturasProv extends javax.swing.JPanel {
         cxTipoFactura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CONTADO", "CRÉDITO" }));
         cxTipoFactura.setPreferredSize(new java.awt.Dimension(1, 15));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tFacturaProvDet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -260,7 +278,7 @@ public class FacturasProv extends javax.swing.JPanel {
                 "Ítem", "Producto", "Descripción", "Cantidad", "Importe"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tFacturaProvDet);
 
         tfTotal.setBackground(new java.awt.Color(229, 232, 237));
         tfTotal.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -450,16 +468,12 @@ public class FacturasProv extends javax.swing.JPanel {
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
-//        Date fecha = null;
-//        DateFormat dtFmt = null;
         try {
             // Nro. Factura Proveedor
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
             // Id Empresa
             int index = cxEmpresa.getSelectedIndex();
             int idEmpresa = empresas.get(index).getId();
-            // Fecha
-//            dtFmt = new SimpleDateFormat("dd/mm/yyyy");;
             String fecha = tfFecha.getText();
             // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
             int estado = cxEstado.getSelectedIndex() + 1;
@@ -481,14 +495,11 @@ public class FacturasProv extends javax.swing.JPanel {
     }//GEN-LAST:event_bUpdateActionPerformed
 
     private void bCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateActionPerformed
-//        Date fecha = null;;
-//        DateFormat dtFmt = null;
         try {
             // Id Empresa
             int index = cxEmpresa.getSelectedIndex();
             int idEmpresa = empresas.get(index).getId();
             // Fecha
-//            dtFmt = new SimpleDateFormat("dd/mm/yyyy");
             String fecha = tfFecha.getText();
             // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
             int estado = cxEstado.getSelectedIndex() + 1;
@@ -521,24 +532,18 @@ public class FacturasProv extends javax.swing.JPanel {
                         + "fapr_tipo_factura, fapr_id_empresa FROM facturas_prov WHERE fapr_nro_factura_prov = " + nroFacturaProv;
 
                 ResultSet rset = conexion.sql(query);
-                if (!rset.next()) {
-                    msg = "No se encontró ninguna Factura con ese número";
-                    setMsg(0);
-                } else {
-                    rset.beforeFirst();
-                    while (rset.next()) {
-                        tfFecha.setText(rset.getString(2));
-                        cxEstado.setSelectedIndex(rset.getInt(3) - 1);
-                        cxTipoFactura.setSelectedIndex(rset.getInt(4) - 1);
-                    }
+                while (rset.next()) {
+                    tfFecha.setText(rset.getString(2));
+                    cxEstado.setSelectedIndex(rset.getInt(3) - 1);
+                    cxTipoFactura.setSelectedIndex(rset.getInt(4) - 1);
                 }
             }
         } catch (SQLException ex) {
-            msg = "No se encontró el registro";
+            msg = "Error al consultar";
             setMsg(0);
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            msg = "No se encontró el registro";
+            msg = "Error al consultar";
             setMsg(0);
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         };
@@ -558,7 +563,6 @@ public class FacturasProv extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lEmpresa;
     private javax.swing.JLabel lEstado;
     private javax.swing.JLabel lEstado1;
@@ -567,6 +571,7 @@ public class FacturasProv extends javax.swing.JPanel {
     private javax.swing.JLabel lNroFactProv;
     private javax.swing.JLabel lTipoFactura;
     private javax.swing.JLayeredPane lpSecondary;
+    private javax.swing.JTable tFacturaProvDet;
     private javax.swing.JTextField tfFecha;
     private javax.swing.JTextField tfNroFactProv;
     private javax.swing.JTextField tfTotal;
