@@ -216,14 +216,15 @@ public class bdOracle{
         return cs.getInt(6);
     }
     
-    public int fc_dele_factura_prov_det(int item) throws SQLException {
+    public int fc_dele_factura_prov_det(int item, int nro_factura_prov) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?) }");
+        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?, ?) }");
         cs.setInt(1, item);
-        cs.registerOutParameter(2, Types.INTEGER);
+        cs.setInt(2, nro_factura_prov);
+        cs.registerOutParameter(3, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(2);
+        return cs.getInt(3);
     }
 
     public int fc_actu_factura_prov(int nroFacturaProv, java.util.Date dtToday, int estado, int tipo, int idEmpresa) {

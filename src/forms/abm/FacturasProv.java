@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 import models.Empresa;
 import models.FacturaProvDet;
 
@@ -33,6 +33,7 @@ import models.FacturaProvDet;
 public class FacturasProv extends javax.swing.JPanel {
     private final JFrame fFacturaProv = new JFrame("Factura de Proveedor");
     private List<Empresa> empresas;
+    private List<FacturaProvDet> facturasProvDet;
     private final bdOracle conexion;
     private String msg;
 
@@ -95,25 +96,53 @@ public class FacturasProv extends javax.swing.JPanel {
         return rowValues;
     }
     
-    private ArrayList<FacturaProvDet> populateTable(int nroFacturaProv) {
-        ArrayList<FacturaProvDet> rowValues = new ArrayList<FacturaProvDet>();
+    private DefaultTableModel populateTable(int nroFacturaProv) {
+        String[] columnNames = { "Ítem", "Producto", "Descripción", "Cantidad", "Importe" };
+        facturasProvDet = new ArrayList<FacturaProvDet>();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(columnNames);
         try {
             FacturaProvDet facturaProvDetalle = null;
-            String query = "SELECT fpde_item, fpde_nro_factura_prov, fpde_cod_producto, fpde_cantidad, fpde_importe "
-                    + "FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv;
+            String query = "SELECT fp.fpde_item, fp.fpde_nro_factura_prov, fp.fpde_cod_producto, fp.fpde_cantidad, fp.fpde_importe, p.prod_descripcion "
+                    + "FROM facturas_prov_det fp, productos p WHERE fp.fpde_nro_factura_prov = " + nroFacturaProv + 
+                    " AND fp.fpde_cod_producto = p.prod_cod_producto";
 
             ResultSet rset = conexion.sql(query);
+            
             while (rset.next()) {
-                facturaProvDetalle = new FacturaProvDet(rset.getInt(1), rset.getInt(2), rset.getInt(3), rset.getDouble(4), rset.getDouble(5));
-                rowValues.add(facturaProvDetalle);
+                facturaProvDetalle = new FacturaProvDet(rset.getInt(1), 
+                        rset.getInt(2), rset.getInt(3), rset.getInt(4), rset.getInt(5), rset.getString(6));
+                facturasProvDet.add(facturaProvDetalle);
+                String[] data = { String.valueOf(facturaProvDetalle.getItem()), 
+                    String.valueOf(facturaProvDetalle.getCodigoProducto()), facturaProvDetalle.getDescripcion(), String.valueOf(facturaProvDetalle.getCantidad()),
+                        String.valueOf(facturaProvDetalle.getImporte())};
+                model.addRow(data);
             }
-            return rowValues;
+            return model;
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
-         
+    
+    private int calcularTotal() {
+        int total = 0;
+        for (FacturaProvDet fpde : facturasProvDet) {
+            total += fpde.getCantidad() * fpde.getImporte();
+        }
+        return total;
+    }
+    
+    public int findEmpresa(int id) {
+	for(Empresa e: empresas) {
+            if(id == e.getId()) {
+                return empresas.indexOf(e);
+            }
+	}
+	return -1;
+    }
+    
     private void setMsg(int response) {
         lMsg.setVisible(true);
         lMsg.setText(msg);
@@ -338,9 +367,9 @@ public class FacturasProv extends javax.swing.JPanel {
                         .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 63, Short.MAX_VALUE))
                     .addGroup(lpSecondaryLayout.createSequentialGroup()
-                        .addGap(217, 274, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lEstado1)
                         .addGap(18, 18, 18)
                         .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -378,7 +407,7 @@ public class FacturasProv extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lpSecondaryLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addContainerGap())
         );
         lpSecondaryLayout.setVerticalGroup(
             lpSecondaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,9 +444,9 @@ public class FacturasProv extends javax.swing.JPanel {
                     .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -426,15 +455,15 @@ public class FacturasProv extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lpSecondary, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lpSecondary, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(lpSecondary, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(lpSecondary, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -448,7 +477,11 @@ public class FacturasProv extends javax.swing.JPanel {
         try {
             // Nro. Factura Proveedor
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-
+            try {
+                conexion.sql("DELETE FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv);
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
             int response = conexion.fc_dele_factura_prov(nroFacturaProv);
             if (response == 1) {
                 msg = "Registro eliminado correctamente";
@@ -487,6 +520,16 @@ public class FacturasProv extends javax.swing.JPanel {
                 msg = "No se pudo actualizar el registro";
             }
             setMsg(response);
+            
+            // Actualizar detalle
+            for (int i = 0; i < tFacturaProvDet.getRowCount(); i++) {
+                // Item, Cantidad, Importe, Nro_factura_prov, Cod_producto
+                conexion.fc_actu_factura_prov_det(Integer.parseInt(tFacturaProvDet.getValueAt(i, 0).toString()), 
+                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 3).toString()), 
+                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 4).toString()),
+                        nroFacturaProv,
+                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 1).toString()));
+            }
         } catch (Exception ex) {
             msg = "No se pudo actualizar el registro";
             setMsg(0);
@@ -536,6 +579,9 @@ public class FacturasProv extends javax.swing.JPanel {
                     tfFecha.setText(rset.getString(2));
                     cxEstado.setSelectedIndex(rset.getInt(3) - 1);
                     cxTipoFactura.setSelectedIndex(rset.getInt(4) - 1);
+                    cxEmpresa.setSelectedIndex(findEmpresa(rset.getInt(5)));
+                    tFacturaProvDet.setModel(populateTable(nroFacturaProv));
+                    tfTotal.setText(String.valueOf(calcularTotal()));
                 }
             }
         } catch (SQLException ex) {
@@ -551,6 +597,7 @@ public class FacturasProv extends javax.swing.JPanel {
 
         
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bConsultar;
     private javax.swing.JButton bCreate;

@@ -8,15 +8,17 @@ public class FacturaProvDet {
     private int item;
     private int nroFacturaProv;
     private int codigoProducto;
-    private double cantidad;
-    private double importe;
+    private int cantidad;
+    private int importe;
+    private String descripcion;
 
-    public FacturaProvDet(int item, int nroFacturaProv, int codigoProducto, double cantidad, double importe) {
+    public FacturaProvDet(int item, int nroFacturaProv, int codigoProducto, int cantidad, int importe, String descripcion) {
         this.item = item;
         this.nroFacturaProv = nroFacturaProv;
         this.codigoProducto = codigoProducto;
         this.cantidad = cantidad;
         this.importe = importe;
+        this.descripcion = descripcion;
     }
 
     public int getItem() {
@@ -31,11 +33,11 @@ public class FacturaProvDet {
         return codigoProducto;
     }
 
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public double getImporte() {
+    public int getImporte() {
         return importe;
     }
 
@@ -51,11 +53,19 @@ public class FacturaProvDet {
         this.codigoProducto = codigoProducto;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public void setImporte(double importe) {
+    public void setImporte(int importe) {
         this.importe = importe;
     }
 }
