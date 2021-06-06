@@ -5,7 +5,7 @@ import java.sql.*;
 public class bdOracle{
   private Connection conn;
 
-  public void abrir(String usu, String pass)throws SQLException{
+  public void abrir(String usu, String pass) throws SQLException {
     DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
     conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.116.200:1521:xe", usu, pass);
   }
