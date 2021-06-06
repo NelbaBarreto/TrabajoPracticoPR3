@@ -11,6 +11,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +45,7 @@ public class Login extends javax.swing.JPanel {
         try {
             bd.abrir(username, password);
             frame.dispose();
-            MenuPrincipal fMainMenu = new MenuPrincipal(bd);
+            Main fMainMenu = new Main(bd);
             fMainMenu.run();
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,6 +127,11 @@ public class Login extends javax.swing.JPanel {
         pfPass.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         pfPass.setBorder(null);
         pfPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pfPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pfPassKeyPressed(evt);
+            }
+        });
 
         cbShowPass.setBackground(new java.awt.Color(255, 255, 255));
         cbShowPass.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
@@ -315,6 +321,12 @@ public class Login extends javax.swing.JPanel {
             pfPass.setEchoChar('*');
         }
     }//GEN-LAST:event_cbShowPassActionPerformed
+
+    private void pfPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfPassKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_pfPassKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
