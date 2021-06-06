@@ -7,6 +7,7 @@ package forms;
 
 import db.bdOracle;
 import forms.abm.Empresas;
+import forms.abm.FacturasProv;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -69,7 +70,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
         lCaja = new javax.swing.JLabel();
         lPersonas = new javax.swing.JButton();
         lRecepciones = new javax.swing.JButton();
-        lFacturaProv = new javax.swing.JButton();
+        bFacturaProv = new javax.swing.JButton();
         bFacturaVenta = new javax.swing.JButton();
 
         lpSecondary.setBackground(new java.awt.Color(255, 255, 255));
@@ -117,12 +118,17 @@ public class MenuPrincipal extends javax.swing.JPanel {
         lRecepciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lRecepciones.setFocusPainted(false);
 
-        lFacturaProv.setBackground(new java.awt.Color(255, 255, 255));
-        lFacturaProv.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        lFacturaProv.setText("Factura Proveedor");
-        lFacturaProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
-        lFacturaProv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lFacturaProv.setFocusPainted(false);
+        bFacturaProv.setBackground(new java.awt.Color(255, 255, 255));
+        bFacturaProv.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        bFacturaProv.setText("Factura Proveedor");
+        bFacturaProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
+        bFacturaProv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bFacturaProv.setFocusPainted(false);
+        bFacturaProv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFacturaProvActionPerformed(evt);
+            }
+        });
 
         bFacturaVenta.setBackground(new java.awt.Color(255, 255, 255));
         bFacturaVenta.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -138,7 +144,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
         lpSecondary.setLayer(lCaja, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(lPersonas, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(lRecepciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lpSecondary.setLayer(lFacturaProv, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpSecondary.setLayer(bFacturaProv, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lpSecondary.setLayer(bFacturaVenta, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lpSecondaryLayout = new javax.swing.GroupLayout(lpSecondary);
@@ -161,7 +167,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lRecepciones, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lFacturaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bFacturaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         lpSecondaryLayout.setVerticalGroup(
@@ -179,7 +185,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
                 .addGroup(lpSecondaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRecepciones, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lFacturaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bFacturaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(lCaja)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -211,13 +217,19 @@ public class MenuPrincipal extends javax.swing.JPanel {
         fEmpresa.run();
     }//GEN-LAST:event_bEmpresasActionPerformed
 
+    private void bFacturaProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFacturaProvActionPerformed
+        fMainMenu.dispose();
+        FacturasProv fFacturaProv = new FacturasProv(conexion);
+        fFacturaProv.run();
+    }//GEN-LAST:event_bFacturaProvActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bEmpresas;
+    private javax.swing.JButton bFacturaProv;
     private javax.swing.JButton bFacturaVenta;
     private javax.swing.JButton bProductos;
     private javax.swing.JLabel lCaja;
-    private javax.swing.JButton lFacturaProv;
     private javax.swing.JLabel lMantenimientos;
     private javax.swing.JLabel lParametros;
     private javax.swing.JButton lPersonas;

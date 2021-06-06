@@ -145,12 +145,12 @@ public class bdOracle{
     }
     
     // Funciones para [FACTURAS_PROV]
-    public int fc_inse_factura_prov(int nro, Date fecha, int estado, 
+    public int fc_inse_factura_prov(int nro, String fecha, int estado, 
             int tipo_factura, int id_empresa) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_INSE_FACTURA_PROV(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, nro);
-        cs.setDate(2, fecha);
+        cs.setString(2, fecha);
         cs.setInt(3, estado);
         cs.setInt(4, tipo_factura);
         cs.setInt(5, id_empresa);
@@ -160,12 +160,12 @@ public class bdOracle{
         return cs.getInt(6);
     }
     
-    public int fc_actu_factura_prov(int nro, Date fecha, int estado, 
+    public int fc_actu_factura_prov(int nro, String fecha, int estado, 
             int tipo_factura, int id_empresa) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_ACTU_FACTURA_PROV(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, nro);
-        cs.setDate(2, fecha);
+        cs.setString(2, fecha);
         cs.setInt(3, estado);
         cs.setInt(4, tipo_factura);
         cs.setInt(5, id_empresa);
@@ -216,13 +216,18 @@ public class bdOracle{
         return cs.getInt(6);
     }
     
-    public int fc_dele_factura_prov_det(int item) throws SQLException {
+    public int fc_dele_factura_prov_det(int item, int nro_factura_prov) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?) }");
+        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?, ?) }");
         cs.setInt(1, item);
-        cs.registerOutParameter(2, Types.INTEGER);
+        cs.setInt(2, nro_factura_prov);
+        cs.registerOutParameter(3, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(2);
+        return cs.getInt(3);
+    }
+
+    public int fc_actu_factura_prov(int nroFacturaProv, java.util.Date dtToday, int estado, int tipo, int idEmpresa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
