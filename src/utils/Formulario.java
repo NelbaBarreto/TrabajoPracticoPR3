@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.Empresa;
 import models.FacturaProvDet;
+import models.Producto;
 
 /**
  *
@@ -49,7 +50,8 @@ public class Formulario {
                 empresas = new ArrayList<Empresa>();
                 Empresa currentEmpresa = null;
                 int i = 0;
-                String query = "SELECT EMPR_ID_EMPRESA, EMPR_DESCRIPCION FROM EMPRESAS ORDER BY EMPR_ID_EMPRESA DESC";
+                String query = "SELECT EMPR_ID_EMPRESA, EMPR_DESCRIPCION FROM "
+                        + "EMPRESAS ORDER BY EMPR_DESCRIPCION";
 
                 ResultSet rset = conexion.sql(query);
                 while (rset.next()) {
@@ -76,7 +78,7 @@ public class Formulario {
                 empresas = new ArrayList<Empresa>();
                 Empresa empresa = null;
                 String query = "SELECT EMPR_ID_EMPRESA, EMPR_DESCRIPCION "
-                        + "FROM EMPRESAS ORDER BY EMPR_ID_EMPRESA DESC";
+                        + "FROM EMPRESAS ORDER BY EMPR_DESCRIPCION";
 
                 ResultSet rset = conexion.sql(query);
                 while (rset.next()) {
@@ -89,16 +91,6 @@ public class Formulario {
             }
             cxEmpresa.setModel(rowValues);
             return empresas;
-        }
-
-        public static void setMsg(int response, JLabel lMsg, String msg) {
-            lMsg.setVisible(true);
-            lMsg.setText(msg);
-            if (response == 1) {
-                lMsg.setForeground(Color.GREEN);
-            } else {
-                lMsg.setForeground(Color.RED);
-            }
         }
     }
 
@@ -123,7 +115,7 @@ public class Formulario {
                 FacturaProvDet facturaProvDetalle = null;
                 String query = "SELECT fp.fpde_item, fp.fpde_nro_factura_prov, fp.fpde_cod_producto, fp.fpde_cantidad, fp.fpde_importe, p.prod_descripcion "
                         + "FROM facturas_prov_det fp, productos p WHERE fp.fpde_nro_factura_prov = " + nroFacturaProv
-                        + " AND fp.fpde_cod_producto = p.prod_cod_producto";
+                        + " AND fp.fpde_cod_producto = p.prod_cod_producto ORDER BY fp.fpde_item";
 
                 ResultSet rset = conexion.sql(query);
 
@@ -154,17 +146,90 @@ public class Formulario {
         }
     }
 
+    public static class Productos {
+        public static int findProducto(int codigo, List<Producto> productos) {
+            for (Producto p : productos) {
+                if (codigo == p.getCodigo()) {
+                    return productos.indexOf(p);
+                }
+            }
+            return -1;
+        }
+
+        public static List<Producto> populateComboBox(JComboBox cxProductos, bdOracle conexion) {
+            DefaultComboBoxModel<String> rowValues = new DefaultComboBoxModel<>();
+            List<Producto> productos = new ArrayList<Producto>();
+
+            try {
+                productos = new ArrayList<Producto>();
+                Producto producto = null;
+                String query = "SELECT PROD_COD_PRODUCTO, PROD_DESCRIPCION "
+                        + "FROM PRODUCTOS ORDER BY PROD_DESCRIPCION";
+
+                ResultSet rset = conexion.sql(query);
+                while (rset.next()) {
+                    producto = new Producto(Integer.parseInt(rset.getString(1)), rset.getString(2));
+                    productos.add(producto);
+                    rowValues.addElement(producto.getDescripcion());
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cxProductos.setModel(rowValues);
+            return productos;
+        }
+
+        public static List<Producto> populateList(JList lProductos, bdOracle conexion) {
+            DefaultListModel<String> rowValues = new DefaultListModel<>();
+            List<Producto> productos;
+
+            try {
+                productos = new ArrayList<Producto>();
+                Producto currentProducto = null;
+                int i = 0;
+                String query = "SELECT PROD_COD_PRODUCTO, PROD_DESCRIPCION "
+                        + "FROM PRODUCTOS ORDER BY PROD_DESCRIPCION";
+
+                ResultSet rset = conexion.sql(query);
+                while (rset.next()) {
+                    currentProducto = new Producto(Integer.parseInt(rset.getString(1)), rset.getString(2));
+                    productos.add(currentProducto);
+
+                    rowValues.add(i, rset.getString(2));
+                    i++;
+                }
+                lProductos.setModel(rowValues);
+
+                return productos;
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+    }
+
     public static class General {
+
         public static boolean resultSetIsEmpty(ResultSet rs) throws SQLException {
             boolean isEmpty;
-            
+
             if (rs.next() == false) {
                 isEmpty = true;
             } else {
                 isEmpty = false;
             }
-            
+
             return isEmpty;
+        }
+
+        public static void setMsg(int response, JLabel lMsg, String msg) {
+            lMsg.setVisible(true);
+            lMsg.setText(msg);
+            if (response == 1) {
+                lMsg.setForeground(Color.GREEN);
+            } else {
+                lMsg.setForeground(Color.RED);
+            }
         }
     }
 }
