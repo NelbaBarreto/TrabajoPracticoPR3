@@ -72,33 +72,35 @@ public class bdOracle{
     
     // Funciones para [PERSONAS]
     public int fc_inse_persona(int cod, String nombre1, String nombre2, 
-        String apellido1, String apellido2) throws SQLException {
+        String apellido1, String apellido2, String cedula) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_INSE_PERSONA(?, ?, ?, ?, ?, ?) }");
+        cs = conn.prepareCall("{ call PC_INSE_PERSONA(?, ?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, cod);
         cs.setString(2, nombre1);
         cs.setString(3, nombre2);
         cs.setString(4, apellido1);
         cs.setString(5, apellido2);
-        cs.registerOutParameter(6, Types.INTEGER);
+        cs.setString(6, cedula);
+        cs.registerOutParameter(7, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(6);
+        return cs.getInt(7);
     }
     
     public int fc_actu_persona(int cod, String nombre1, String nombre2, 
-        String apellido1, String apellido2) throws SQLException {
+        String apellido1, String apellido2, String cedula) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_ACTU_PERSONA(?, ?, ?, ?, ?, ?) }");
+        cs = conn.prepareCall("{ call PC_ACTU_PERSONA(?, ?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, cod);
         cs.setString(2, nombre1);
         cs.setString(3, nombre2);
         cs.setString(4, apellido1);
         cs.setString(5, apellido2);
-        cs.registerOutParameter(6, Types.INTEGER);
+        cs.setString(6, cedula);
+        cs.registerOutParameter(7, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(6);
+        return cs.getInt(7);
     }
     
     public int fc_dele_persona(int cod) throws SQLException {

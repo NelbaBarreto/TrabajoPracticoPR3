@@ -16,6 +16,7 @@ import java.sql.SQLException;
  *
  * @author Nelba Barreto
  */
+
 public class AddFacturaProvDet extends javax.swing.JPanel {
 
     private List<Producto> productos;
@@ -281,7 +282,7 @@ pEmpresasLayout.setHorizontalGroup(
         frame.add(pProductos);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(600, 450);
+        frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
     }//GEN-LAST:event_bMoreActionPerformed
 

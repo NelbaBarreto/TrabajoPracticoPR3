@@ -160,7 +160,7 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
     pEmpresasLayout.setVerticalGroup(
         pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pEmpresasLayout.createSequentialGroup()
-            .addGap(45, 45, 45)
+            .addGap(46, 46, 46)
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addComponent(lId)
@@ -194,7 +194,7 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 357, Short.MAX_VALUE)
+        .addGap(0, 358, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -202,17 +202,6 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                 .addGap(0, 0, Short.MAX_VALUE)))
     );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void lProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lProductosValueChanged
-        if (lProductos.getSelectedValue() != null) {
-            String descripcion = lProductos.getSelectedValue();
-            int index = lProductos.getSelectedIndex();
-            String id = String.valueOf(productos.get(index).getCodigo());
-
-            tfCodProducto.setText(id);
-            tfDescripcion.setText(descripcion);
-        }
-    }//GEN-LAST:event_lProductosValueChanged
 
     private void bCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateActionPerformed
         try {
@@ -275,6 +264,17 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
+
+    private void lProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lProductosValueChanged
+        if (lProductos.getSelectedValue() != null) {
+            String descripcion = lProductos.getSelectedValue();
+            int index = lProductos.getSelectedIndex();
+            String id = String.valueOf(productos.get(index).getCodigo());
+
+            tfCodProducto.setText(id);
+            tfDescripcion.setText(descripcion);
+        }
+    }//GEN-LAST:event_lProductosValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

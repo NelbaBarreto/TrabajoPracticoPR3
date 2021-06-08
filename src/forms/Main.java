@@ -66,7 +66,6 @@ public class Main extends javax.swing.JFrame {
         lMsg1 = new javax.swing.JLabel();
         pMantenimientos = new javax.swing.JPanel();
         tpSMantenimiento = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
         pRecepciones = new javax.swing.JPanel();
         pFacturaProv = new javax.swing.JPanel();
         laEmpresa = new javax.swing.JLabel();
@@ -211,7 +210,7 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
                         .addGroup(pEmpresasLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(lMsg1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(27, 27, 27))
     );
@@ -236,7 +235,7 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
                         .addComponent(bUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane1))
-            .addContainerGap(41, Short.MAX_VALUE))
+            .addContainerGap(62, Short.MAX_VALUE))
     );
 
     tpSParametros.addTab("Empresas", pEmpresas);
@@ -252,7 +251,7 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
         .addComponent(tpSParametros)
     );
 
-    Productos abmProductos = new Productos(conexion);
+    forms.ABM.Productos abmProductos = new forms.ABM.Productos(conexion);
     tpSParametros.addTab("Productos", abmProductos);
 
     tpPrimary.addTab("PARÁMETROS", pParametros);
@@ -260,21 +259,8 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
     tpSMantenimiento.setBackground(new java.awt.Color(255, 255, 255));
     tpSMantenimiento.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
     tpSMantenimiento.setVerifyInputWhenFocusTarget(false);
-
-    jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
-    );
-    jPanel2Layout.setVerticalGroup(
-        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
-    );
-
-    tpSMantenimiento.addTab("Personas", jPanel2);
+    forms.ABM.Personas abmPersonas = new forms.ABM.Personas(conexion);
+    tpSMantenimiento.addTab("Personas", abmPersonas);
 
     pRecepciones.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -306,7 +292,7 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
 
     tfNroFactProv.setBackground(new java.awt.Color(229, 232, 237));
     tfNroFactProv.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    tfNroFactProv.setBorder(null);
+    tfNroFactProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
     tfNroFactProv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     tfNroFactProv.setDisabledTextColor(new java.awt.Color(51, 51, 51));
     tfNroFactProv.setBorder(BorderFactory.createCompoundBorder(
@@ -402,7 +388,8 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
 
     bConsultar.setBackground(new java.awt.Color(255, 255, 255));
     bConsultar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-    bConsultar.setText("Consultar");
+    bConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/search.png"))); // NOI18N
+    bConsultar.setToolTipText("Consultar");
     bConsultar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
     bConsultar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     bConsultar.setFocusPainted(false);
@@ -477,8 +464,21 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             .addGap(23, 23, 23)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pFacturaProvLayout.createSequentialGroup()
-                    .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFacturaProvLayout.createSequentialGroup()
+                    .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pFacturaProvLayout.createSequentialGroup()
+                            .addComponent(laEmpresa)
+                            .addGap(18, 18, 18)
+                            .addComponent(cxEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bClean))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pFacturaProvLayout.createSequentialGroup()
                             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(pFacturaProvLayout.createSequentialGroup()
                                     .addComponent(lNroFactProv)
@@ -488,21 +488,24 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                                     .addComponent(lEstado)
                                     .addGap(18, 18, 18)
                                     .addComponent(cxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(0, 0, 0)
                             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lFecha, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFacturaProvLayout.createSequentialGroup()
+                                    .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lFecha))
                                 .addComponent(lTipoFactura, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addGap(26, 26, 26)
                             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cxTipoFactura, 0, 186, Short.MAX_VALUE)
                                 .addComponent(tfFecha)))
-                        .addGroup(pFacturaProvLayout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pFacturaProvLayout.createSequentialGroup()
                             .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lEstado1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pFacturaProvLayout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pFacturaProvLayout.createSequentialGroup()
                             .addComponent(bReload)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -512,31 +515,14 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                                 .addComponent(bAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(bDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(23, 23, 23))
-                .addGroup(pFacturaProvLayout.createSequentialGroup()
-                    .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pFacturaProvLayout.createSequentialGroup()
-                            .addComponent(laEmpresa)
-                            .addGap(18, 18, 18)
-                            .addComponent(cxEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(bClean))
-                        .addGroup(pFacturaProvLayout.createSequentialGroup()
-                            .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGap(23, 23, 23))))
     );
     pFacturaProvLayout.setVerticalGroup(
         pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pFacturaProvLayout.createSequentialGroup()
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pFacturaProvLayout.createSequentialGroup()
-                    .addGap(25, 25, 25)
+                    .addGap(46, 46, 46)
                     .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(laEmpresa)
                         .addComponent(cxEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -544,11 +530,13 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                     .addContainerGap()
                     .addComponent(bClean)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(tfNroFactProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(tfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(lNroFactProv)
-                .addComponent(lFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNroFactProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lNroFactProv)
+                    .addComponent(lFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(17, 17, 17)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(cxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -564,9 +552,9 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                         .addComponent(bReload))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(bEdit)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(bDelete2)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(lEstado1)
@@ -575,10 +563,11 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(21, 21, 21))
     );
+
+    bReload.getAccessibleContext().setAccessibleDescription("Recargar");
 
     tpSMantenimiento.addTab("Factura Proveedor", pFacturaProv);
 
@@ -586,7 +575,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     pMantenimientos.setLayout(pMantenimientosLayout);
     pMantenimientosLayout.setHorizontalGroup(
         pMantenimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(tpSMantenimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 572, Short.MAX_VALUE)
+        .addComponent(tpSMantenimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 576, Short.MAX_VALUE)
     );
     pMantenimientosLayout.setVerticalGroup(
         pMantenimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -604,11 +593,11 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     pFacturaVenta.setLayout(pFacturaVentaLayout);
     pFacturaVentaLayout.setHorizontalGroup(
         pFacturaVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 567, Short.MAX_VALUE)
+        .addGap(0, 571, Short.MAX_VALUE)
     );
     pFacturaVentaLayout.setVerticalGroup(
         pFacturaVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 357, Short.MAX_VALUE)
+        .addGap(0, 378, Short.MAX_VALUE)
     );
 
     tpSCaja.addTab("Factura Venta", pFacturaVenta);
@@ -667,136 +656,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateActionPerformed
-        try {
-            // Id Empresa
-            int index = cxEmpresa.getSelectedIndex();
-            int idEmpresa = empresas.get(index).getId();
-            // Fecha
-            String fecha = tfFecha.getText();
-            // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
-            int estado = cxEstado.getSelectedIndex() + 1;
-            // Tipo (1. CONTADO, 2. CREDITO)
-            int tipo = cxTipoFactura.getSelectedIndex() + 1;
-
-            int response = conexion.fc_inse_factura_prov(conexion.recuSigteNumero("FACTURAS_PROV"),
-                    fecha, estado, tipo, idEmpresa);
-            if (response == 1) {
-                msg = "Registro insertado correctamente";
-            } else {
-                msg = "No se pudo insertar el registro";
-            }
-            Formulario.General.setMsg(response, lMsg, msg);
-        } catch (Exception ex) {
-            msg = "No se pudo insertar el registro";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        };
-    }//GEN-LAST:event_bCreateActionPerformed
-
-    private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
-        try {
-            // Nro. Factura Proveedor
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            // Id Empresa
-            int index = cxEmpresa.getSelectedIndex();
-            int idEmpresa = empresas.get(index).getId();
-            String fecha = tfFecha.getText();
-            // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
-            int estado = cxEstado.getSelectedIndex() + 1;
-            // Tipo (1. CONTADO, 2. CREDITO)
-            int tipo = cxTipoFactura.getSelectedIndex() + 1;
-
-            int response = conexion.fc_actu_factura_prov(nroFacturaProv, fecha, estado, tipo, idEmpresa);
-            if (response == 1) {
-                msg = "Registro actualizado correctamente";
-            } else {
-                msg = "No se pudo actualizar el registro";
-            }
-            Formulario.General.setMsg(response, lMsg, msg);
-
-            // Actualizar detalle
-            for (int i = 0; i < tFacturaProvDet.getRowCount(); i++) {
-                // Item, Cantidad, Importe, Nro_factura_prov, Cod_producto
-                conexion.fc_actu_factura_prov_det(Integer.parseInt(tFacturaProvDet.getValueAt(i, 0).toString()),
-                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 3).toString()),
-                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 4).toString()),
-                        nroFacturaProv,
-                        Integer.parseInt(tFacturaProvDet.getValueAt(i, 1).toString()));
-            }
-        } catch (Exception ex) {
-            msg = "No se pudo actualizar el registro";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        };
-    }//GEN-LAST:event_bUpdateActionPerformed
-
-    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
-        try {
-            // Nro. Factura Proveedor
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            try {
-                conexion.sql("DELETE FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv);
-            } catch (SQLException ex) {
-                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            int response = conexion.fc_dele_factura_prov(nroFacturaProv);
-            if (response == 1) {
-                msg = "Registro eliminado correctamente";
-            } else {
-                msg = "No se pudo eliminar el registro";
-            }
-            Formulario.General.setMsg(response, lMsg, msg);
-        } catch (SQLException ex) {
-            msg = "No se pudo eliminar el registro";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            msg = "No se pudo eliminar el registro";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        };
-    }//GEN-LAST:event_bDeleteActionPerformed
-
-    private void bConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarActionPerformed
-        try {
-            if (tfNroFactProv.getText().equals("")) {
-                msg = "Nro. Factura Prov. no puede estar vacío";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                // Nro. Factura Proveedor
-                int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-                String query = "SELECT fapr_nro_factura_prov, TO_CHAR(fapr_fecha, 'dd/mm/yyyy'), fapr_estado, "
-                        + "fapr_tipo_factura, fapr_id_empresa FROM facturas_prov WHERE fapr_nro_factura_prov = " + nroFacturaProv;
-
-                ResultSet rset = conexion.sql(query);
-
-                if (Formulario.General.resultSetIsEmpty(rset) == true) {
-                    msg = "No se encuentra ninguna Factura Proveedor con ese número";
-                    Formulario.General.setMsg(0, lMsg, msg);
-                } else {
-                    lMsg.setText("");
-                    do {
-                        tfFecha.setText(rset.getString(2));
-                        cxEstado.setSelectedIndex(rset.getInt(3) - 1);
-                        cxTipoFactura.setSelectedIndex(rset.getInt(4) - 1);
-                        cxEmpresa.setSelectedIndex(Formulario.Empresas.findEmpresa(rset.getInt(5), empresas));
-                        facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
-                        tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
-                    } while (rset.next());
-                }
-            }
-        } catch (SQLException ex) {
-            msg = "Error al consultar";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            msg = "Error al consultar";
-            Formulario.General.setMsg(0, lMsg, msg);
-            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        };
-    }//GEN-LAST:event_bConsultarActionPerformed
 
     private void lEmpresaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lEmpresaValueChanged
         if (lEmpresa.getSelectedValue() != null) {
@@ -871,15 +730,73 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         }
     }//GEN-LAST:event_bDelete1ActionPerformed
 
-    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
-        cxEmpresa.setSelectedIndex(0);
-        tfNroFactProv.setText("");
-        tfFecha.setText("");
-        cxEstado.setSelectedIndex(0);
-        cxTipoFactura.setSelectedIndex(0);
-        facturasProvDet = Formulario.FacturasProvDet.clearTable(tFacturaProvDet);
-        tfTotal.setText("");
-    }//GEN-LAST:event_bCleanActionPerformed
+    private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
+        if (!tfNroFactProv.getText().equals("")) {
+            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
+            facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet,
+                nroFacturaProv, conexion);
+            Formulario.FacturasProvDet.calcularTotal(facturasProvDet);
+        } else {
+            msg = "Nro. Factura Proveedor no puede estar vacío";
+            Formulario.General.setMsg(0, lMsg, msg);
+        }
+    }//GEN-LAST:event_bReloadActionPerformed
+
+    private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
+        if (!tfNroFactProv.getText().equals("")) {
+            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
+            int index = tFacturaProvDet.getSelectedRow();
+            if (index == -1) {
+                msg = "Seleccionar la fila que desea eliminar";
+                Formulario.General.setMsg(0, lMsg, msg);
+            } else {
+                int item = facturasProvDet.get(index).getItem();
+                int response;
+                try {
+                    response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
+                    if (response == 1) {
+                        facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
+                        Formulario.FacturasProvDet.calcularTotal(facturasProvDet);
+                        msg = "Registro eliminado correctamente";
+                    } else {
+                        msg = "No se pudo eliminar el registro";
+                    }
+                    Formulario.General.setMsg(response, lMsg, msg);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            msg = "Nro. Factura Proveedor no puede estar vacío";
+            Formulario.General.setMsg(0, lMsg, msg);
+        }
+    }//GEN-LAST:event_bDelete2ActionPerformed
+
+    private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
+        if (!tfNroFactProv.getText().equals("")) {
+            int EDITAR = 2;
+            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
+            int index = tFacturaProvDet.getSelectedRow();
+
+            if (index == -1) {
+                msg = "Seleccionar la fila que desea editar";
+                Formulario.General.setMsg(0, lMsg, msg);
+            } else {
+                int item = facturasProvDet.get(index).getItem();
+
+                JFrame frame = new JFrame();
+                AddFacturaProvDet pAddFacturaProvDet = new AddFacturaProvDet(conexion, nroFacturaProv, EDITAR, item);
+                frame.add(pAddFacturaProvDet);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(400, 400);
+                frame.setLocationRelativeTo(null);
+            }
+        } else {
+            msg = "Nro. Factura Proveedor no puede estar vacío";
+            Formulario.General.setMsg(0, lMsg, msg);
+        }
+    }//GEN-LAST:event_bEditActionPerformed
 
     private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
         if (!tfNroFactProv.getText().equals("")) {
@@ -899,72 +816,145 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         }
     }//GEN-LAST:event_bAddActionPerformed
 
-    private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
-            int EDITAR = 2;
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tFacturaProvDet.getSelectedRow();
-            
-            if (index == -1) {
-                msg = "Seleccionar la fila que desea editar";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                int item = facturasProvDet.get(index).getItem();
-                        
-                JFrame frame = new JFrame();
-                AddFacturaProvDet pAddFacturaProvDet = new AddFacturaProvDet(conexion, nroFacturaProv, EDITAR, item);
-                frame.add(pAddFacturaProvDet);
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(400, 400);
-                frame.setLocationRelativeTo(null);
-            }
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
-            Formulario.General.setMsg(0, lMsg, msg);
-        }
-    }//GEN-LAST:event_bEditActionPerformed
+    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+        cxEmpresa.setSelectedIndex(0);
+        tfNroFactProv.setText("");
+        tfFecha.setText("");
+        cxEstado.setSelectedIndex(0);
+        cxTipoFactura.setSelectedIndex(0);
+        facturasProvDet = Formulario.FacturasProvDet.clearTable(tFacturaProvDet);
+        tfTotal.setText("");
+    }//GEN-LAST:event_bCleanActionPerformed
 
-    private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tFacturaProvDet.getSelectedRow();
-            if (index == -1) {
-                msg = "Seleccionar la fila que desea eliminar";
+    private void bConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarActionPerformed
+        try {
+            if (tfNroFactProv.getText().equals("")) {
+                msg = "Nro. Factura Prov. no puede estar vacío";
                 Formulario.General.setMsg(0, lMsg, msg);
             } else {
-                int item = facturasProvDet.get(index).getItem();
-                int response;
-                try {
-                    response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
-                    if (response == 1) {
+                // Nro. Factura Proveedor
+                int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
+                String query = "SELECT fapr_nro_factura_prov, TO_CHAR(fapr_fecha, 'dd/mm/yyyy'), fapr_estado, "
+                + "fapr_tipo_factura, fapr_id_empresa FROM facturas_prov WHERE fapr_nro_factura_prov = " + nroFacturaProv;
+
+                ResultSet rset = conexion.sql(query);
+
+                if (Formulario.General.resultSetIsEmpty(rset) == true) {
+                    msg = "No se encuentra ninguna Factura Proveedor con ese número";
+                    Formulario.General.setMsg(0, lMsg, msg);
+                } else {
+                    lMsg.setText("");
+                    do {
+                        tfFecha.setText(rset.getString(2));
+                        cxEstado.setSelectedIndex(rset.getInt(3) - 1);
+                        cxTipoFactura.setSelectedIndex(rset.getInt(4) - 1);
+                        cxEmpresa.setSelectedIndex(Formulario.Empresas.findEmpresa(rset.getInt(5), empresas));
                         facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
-                        msg = "Registro eliminado correctamente";
-                    } else {
-                        msg = "No se pudo eliminar el registro";
-                    }
-                    Formulario.General.setMsg(response, lMsg, msg);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
+                    } while (rset.next());
                 }
             }
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+        } catch (SQLException ex) {
+            msg = "Error al consultar";
             Formulario.General.setMsg(0, lMsg, msg);
-        }
-    }//GEN-LAST:event_bDelete2ActionPerformed
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            msg = "Error al consultar";
+            Formulario.General.setMsg(0, lMsg, msg);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        };
+    }//GEN-LAST:event_bConsultarActionPerformed
 
-    private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
+    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+        try {
+            // Nro. Factura Proveedor
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet,
-                    nroFacturaProv, conexion);
-            Formulario.FacturasProvDet.calcularTotal(facturasProvDet);
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+            try {
+                conexion.sql("DELETE FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv);
+            } catch (SQLException ex) {
+                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int response = conexion.fc_dele_factura_prov(nroFacturaProv);
+            if (response == 1) {
+                msg = "Registro eliminado correctamente";
+            } else {
+                msg = "No se pudo eliminar el registro";
+            }
+            Formulario.General.setMsg(response, lMsg, msg);
+        } catch (SQLException ex) {
+            msg = "No se pudo eliminar el registro";
             Formulario.General.setMsg(0, lMsg, msg);
-        }
-    }//GEN-LAST:event_bReloadActionPerformed
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            msg = "No se pudo eliminar el registro";
+            Formulario.General.setMsg(0, lMsg, msg);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        };
+    }//GEN-LAST:event_bDeleteActionPerformed
+
+    private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
+        try {
+            // Nro. Factura Proveedor
+            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
+            // Id Empresa
+            int index = cxEmpresa.getSelectedIndex();
+            int idEmpresa = empresas.get(index).getId();
+            String fecha = tfFecha.getText();
+            // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
+            int estado = cxEstado.getSelectedIndex() + 1;
+            // Tipo (1. CONTADO, 2. CREDITO)
+            int tipo = cxTipoFactura.getSelectedIndex() + 1;
+
+            int response = conexion.fc_actu_factura_prov(nroFacturaProv, fecha, estado, tipo, idEmpresa);
+            if (response == 1) {
+                msg = "Registro actualizado correctamente";
+            } else {
+                msg = "No se pudo actualizar el registro";
+            }
+            Formulario.General.setMsg(response, lMsg, msg);
+
+            // Actualizar detalle
+            for (int i = 0; i < tFacturaProvDet.getRowCount(); i++) {
+                // Item, Cantidad, Importe, Nro_factura_prov, Cod_producto
+                conexion.fc_actu_factura_prov_det(Integer.parseInt(tFacturaProvDet.getValueAt(i, 0).toString()),
+                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 3).toString()),
+                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 4).toString()),
+                    nroFacturaProv,
+                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 1).toString()));
+            }
+        } catch (Exception ex) {
+            msg = "No se pudo actualizar el registro";
+            Formulario.General.setMsg(0, lMsg, msg);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        };
+    }//GEN-LAST:event_bUpdateActionPerformed
+
+    private void bCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateActionPerformed
+        try {
+            // Id Empresa
+            int index = cxEmpresa.getSelectedIndex();
+            int idEmpresa = empresas.get(index).getId();
+            // Fecha
+            String fecha = tfFecha.getText();
+            // Estado (1. ACTIVO, 2. CANCELADO, 3. ANULADO )
+            int estado = cxEstado.getSelectedIndex() + 1;
+            // Tipo (1. CONTADO, 2. CREDITO)
+            int tipo = cxTipoFactura.getSelectedIndex() + 1;
+
+            int response = conexion.fc_inse_factura_prov(conexion.recuSigteNumero("FACTURAS_PROV"),
+                fecha, estado, tipo, idEmpresa);
+            if (response == 1) {
+                msg = "Registro insertado correctamente";
+            } else {
+                msg = "No se pudo insertar el registro";
+            }
+            Formulario.General.setMsg(response, lMsg, msg);
+        } catch (Exception ex) {
+            msg = "No se pudo insertar el registro";
+            Formulario.General.setMsg(0, lMsg, msg);
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        };
+    }//GEN-LAST:event_bCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -985,7 +975,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JComboBox<String> cxEmpresa;
     private javax.swing.JComboBox<String> cxEstado;
     private javax.swing.JComboBox<String> cxTipoFactura;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
