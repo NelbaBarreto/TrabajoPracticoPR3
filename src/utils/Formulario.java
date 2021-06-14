@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Empresa;
 import models.FacturaProvDet;
 import models.Producto;
+import models.Ciudad;
 
 /**
  *
@@ -147,6 +148,7 @@ public class Formulario {
     }
 
     public static class Productos {
+
         public static int findProducto(int codigo, List<Producto> productos) {
             for (Producto p : productos) {
                 if (codigo == p.getCodigo()) {
@@ -201,6 +203,59 @@ public class Formulario {
                 lProductos.setModel(rowValues);
 
                 return productos;
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+    }
+
+    public static class Ciudades {
+
+        public static List<Ciudad> populateComboBox(JComboBox cxCiudades, bdOracle conexion) {
+            DefaultComboBoxModel<String> rowValues = new DefaultComboBoxModel<>();
+            List<Ciudad> ciudades = new ArrayList<Ciudad>();
+
+            try {
+                ciudades = new ArrayList<Ciudad>();
+                Ciudad ciudad = null;
+                String query = "SELECT CIUD_COD_CIUDAD, CIUD_DESCRIPCION "
+                        + "FROM CIUDADES ORDER BY CIUD_COD_CIUDAD";
+                ResultSet rset = conexion.sql(query);
+                while (rset.next()) {
+                    ciudad = new Ciudad(Integer.parseInt(rset.getString(1)), rset.getString(2));
+                    ciudades.add(ciudad);
+                    rowValues.addElement(ciudad.getDescripcion());
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cxCiudades.setModel(rowValues);
+            return ciudades;
+        }
+
+        public static List<Ciudad> populateList(JList lCiudades, bdOracle conexion) {
+            DefaultListModel<String> rowValues = new DefaultListModel<>();
+            List<Ciudad> ciudades;
+
+            try {
+                ciudades = new ArrayList<Ciudad>();
+                Ciudad currentciudad = null;
+                int i = 0;
+                String query = "SELECT CIUD_COD_CIUDAD, CIUD_DESCRIPCION "
+                        + "FROM CIUDADES ORDER BY CIUD_DESCRIPCION";
+
+                ResultSet rset = conexion.sql(query);
+                while (rset.next()) {
+                    currentciudad = new Ciudad(Integer.parseInt(rset.getString(1)), rset.getString(2));
+                    ciudades.add(currentciudad);
+
+                    rowValues.add(i, rset.getString(2));
+                    i++;
+                }
+                lCiudades.setModel(rowValues);
+
+                return ciudades;
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
