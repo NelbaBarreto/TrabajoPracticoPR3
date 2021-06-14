@@ -9,12 +9,12 @@ import db.bdOracle;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
-import models.Producto;
 import utils.Formulario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import javax.swing.JFrame;
+import models.Ciudad;
 
 /**
  *
@@ -22,7 +22,7 @@ import javax.swing.JFrame;
  */
 public class Personas extends javax.swing.JPanel {
 
-    private List<Producto> productos;
+    private List<Ciudad> ciudades;
     private static bdOracle conexion;
     private String msg;
 
@@ -59,8 +59,10 @@ public class Personas extends javax.swing.JPanel {
         laNombre2 = new javax.swing.JLabel();
         laNombre1 = new javax.swing.JLabel();
         bMore = new javax.swing.JButton();
-        cxCiudadNto = new javax.swing.JComboBox<>();
+        cxCiudades = new javax.swing.JComboBox<>();
         laCiudadNto = new javax.swing.JLabel();
+        bReload = new javax.swing.JButton();
+        bClean = new javax.swing.JButton();
 
         pEmpresas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -77,65 +79,62 @@ public class Personas extends javax.swing.JPanel {
         tfNombre1.setBorder(null);
         tfNombre1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tfNombre1.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        tfNombre1.setBorder(BorderFactory.createCompoundBorder(
+            tfNombre1.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-        bCreate.setBackground(new java.awt.Color(255, 255, 255));
-        bCreate.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        bCreate.setText("Insertar");
-        bCreate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
-        bCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        bCreate.setFocusPainted(false);
-        bCreate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCreateActionPerformed(evt);
-            }
-        });
-
-        bUpdate.setBackground(new java.awt.Color(255, 255, 255));
-        bUpdate.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        bUpdate.setText("Actualizar");
-        bUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
-        bUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        bUpdate.setFocusPainted(false);
-        bUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bUpdateActionPerformed(evt);
-            }
-        });
-
-        bDelete.setBackground(new java.awt.Color(255, 255, 255));
-        bDelete.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        bDelete.setText("Eliminar");
-        bDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
-        bDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        bDelete.setFocusPainted(false);
-        bDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bDeleteActionPerformed(evt);
-            }
-        });
-
-        lMsg.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-
-        tfApellido1.setBackground(new java.awt.Color(229, 232, 237));
-        tfApellido1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        tfApellido1.setBorder(null);
-        tfApellido1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tfApellido1.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        tfNombre2.setBorder(BorderFactory.createCompoundBorder(
-            tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-    tfApellido2.setBackground(new java.awt.Color(229, 232, 237));
-    tfApellido2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    tfApellido2.setBorder(null);
-    tfApellido2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    tfApellido2.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-    tfNombre2.setBorder(BorderFactory.createCompoundBorder(
-        tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-tfApellido2.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tfApellido2ActionPerformed(evt);
-    }
+    bCreate.setBackground(new java.awt.Color(255, 255, 255));
+    bCreate.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+    bCreate.setText("Insertar");
+    bCreate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
+    bCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bCreate.setFocusPainted(false);
+    bCreate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            bCreateActionPerformed(evt);
+        }
     });
+
+    bUpdate.setBackground(new java.awt.Color(255, 255, 255));
+    bUpdate.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+    bUpdate.setText("Actualizar");
+    bUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
+    bUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bUpdate.setFocusPainted(false);
+    bUpdate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            bUpdateActionPerformed(evt);
+        }
+    });
+
+    bDelete.setBackground(new java.awt.Color(255, 255, 255));
+    bDelete.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+    bDelete.setText("Eliminar");
+    bDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
+    bDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bDelete.setFocusPainted(false);
+    bDelete.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            bDeleteActionPerformed(evt);
+        }
+    });
+
+    lMsg.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+
+    tfApellido1.setBackground(new java.awt.Color(229, 232, 237));
+    tfApellido1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+    tfApellido1.setBorder(null);
+    tfApellido1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    tfApellido1.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+    tfApellido1.setBorder(BorderFactory.createCompoundBorder(
+        tfApellido1.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+tfApellido2.setBackground(new java.awt.Color(229, 232, 237));
+tfApellido2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+tfApellido2.setBorder(null);
+tfApellido2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+tfApellido2.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+tfApellido2.setBorder(BorderFactory.createCompoundBorder(
+    tfApellido2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
     tfNombre2.setBackground(new java.awt.Color(229, 232, 237));
     tfNombre2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -150,13 +149,8 @@ tfCedula.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 tfCedula.setBorder(null);
 tfCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 tfCedula.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-tfNombre2.setBorder(BorderFactory.createCompoundBorder(
-    tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-    tfCedula.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            tfCedulaActionPerformed(evt);
-        }
-    });
+tfCedula.setBorder(BorderFactory.createCompoundBorder(
+    tfCedula.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
     tfCodPersona.setBackground(new java.awt.Color(229, 232, 237));
     tfCodPersona.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -196,7 +190,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
 
     bMore.setBackground(new java.awt.Color(255, 255, 255));
     bMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/more.png"))); // NOI18N
-    bMore.setToolTipText("Cargar Producto");
+    bMore.setToolTipText("Cargar Ciudad");
     bMore.setBorder(null);
     bMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     bMore.addActionListener(new java.awt.event.ActionListener() {
@@ -205,15 +199,37 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         }
     });
 
-    cxCiudadNto.setBackground(new java.awt.Color(229, 232, 237));
-    cxCiudadNto.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    cxCiudadNto.setPreferredSize(new java.awt.Dimension(1, 15));
-    cxCiudadNto.setPreferredSize(new java.awt.Dimension(1, 15));
-    productos = Formulario.Productos.populateComboBox(cxCiudadNto, conexion);
+    cxCiudades.setBackground(new java.awt.Color(229, 232, 237));
+    cxCiudades.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+    cxCiudades.setPreferredSize(new java.awt.Dimension(1, 15));
+    cxCiudades.setPreferredSize(new java.awt.Dimension(1, 15));
+    ciudades = Formulario.Ciudades.populateComboBox(cxCiudades, conexion);
 
     laCiudadNto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
     laCiudadNto.setLabelFor(tfCedula);
     laCiudadNto.setText("Ciudad de Nacimiento");
+
+    bReload.setBackground(new java.awt.Color(255, 255, 255));
+    bReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/reload.png"))); // NOI18N
+    bReload.setToolTipText("Agregar Nuevo ");
+    bReload.setBorder(null);
+    bReload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bReload.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            bReloadActionPerformed(evt);
+        }
+    });
+
+    bClean.setBackground(new java.awt.Color(255, 255, 255));
+    bClean.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/broom.png"))); // NOI18N
+    bClean.setToolTipText("Limpiar");
+    bClean.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(172, 95, 200)));
+    bClean.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bClean.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            bCleanActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout pEmpresasLayout = new javax.swing.GroupLayout(pEmpresas);
     pEmpresas.setLayout(pEmpresasLayout);
@@ -223,9 +239,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             .addGap(27, 27, 27)
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pEmpresasLayout.createSequentialGroup()
-                    .addComponent(laApellido1)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tfApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(laNombre1))
@@ -234,59 +247,70 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pEmpresasLayout.createSequentialGroup()
                             .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(1, 1, 1))
                         .addGroup(pEmpresasLayout.createSequentialGroup()
                             .addComponent(tfNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(laNombre2)
-                                .addComponent(tfNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(laApellido2)
-                                .addComponent(tfApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(pEmpresasLayout.createSequentialGroup()
-                            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(laCedula)
+                                .addComponent(tfApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(pEmpresasLayout.createSequentialGroup()
-                                    .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(laCodPersona)
+                                    .addComponent(cxCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(bMore))
                                 .addGroup(pEmpresasLayout.createSequentialGroup()
-                                    .addComponent(tfCodPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(laCiudadNto)
-                                .addGroup(pEmpresasLayout.createSequentialGroup()
-                                    .addComponent(cxCiudadNto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(laCiudadNto)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bMore)))))
-                    .addGap(33, 33, 33))))
+                                    .addComponent(bReload))
+                                .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bClean)
+                                    .addComponent(tfNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGap(32, 32, 32))
+                .addGroup(pEmpresasLayout.createSequentialGroup()
+                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(laApellido1)
+                        .addComponent(tfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(laCedula)
+                        .addGroup(pEmpresasLayout.createSequentialGroup()
+                            .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(laCodPersona)
+                        .addGroup(pEmpresasLayout.createSequentialGroup()
+                            .addComponent(tfCodPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, 0)
+                            .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     pEmpresasLayout.setVerticalGroup(
         pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pEmpresasLayout.createSequentialGroup()
-            .addGap(46, 46, 46)
-            .addComponent(laCodPersona)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(tfCodPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pEmpresasLayout.createSequentialGroup()
-                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(laNombre1)
-                        .addComponent(laNombre2))
+                    .addGap(46, 46, 46)
+                    .addComponent(laCodPersona)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tfCodPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pEmpresasLayout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addComponent(bClean)))
+            .addGap(18, 18, 18)
+            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(laNombre1)
+                .addComponent(laNombre2))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(tfNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(laApellido1)
                         .addComponent(laApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -295,13 +319,15 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                         .addComponent(tfApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tfApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
-                    .addComponent(laCedula))
-                .addComponent(laCiudadNto))
+                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(laCedula)
+                        .addComponent(laCiudadNto)))
+                .addComponent(bReload, javax.swing.GroupLayout.Alignment.TRAILING))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cxCiudadNto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cxCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(bMore))
             .addGap(18, 18, 18)
             .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,7 +371,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 ResultSet rset = conexion.sql(query);
 
                 if (Formulario.General.resultSetIsEmpty(rset) == true) {
-                    msg = "No se encuentra ninguna Factura Proveedor con ese número";
+                    msg = "No se encuentra ninguna Persona con ese código";
                     Formulario.General.setMsg(0, lMsg, msg);
                 } else {
                     lMsg.setText("");
@@ -356,7 +382,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                         tfApellido1.setText(rset.getString(4));
                         tfApellido2.setText(rset.getString(5));
                         tfCedula.setText(rset.getString(6));
-                        cxCiudadNto.setSelectedIndex(0);
+                        cxCiudades.setSelectedIndex(0);
                     } while (rset.next());
                 }
             }
@@ -371,14 +397,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         };
     }//GEN-LAST:event_bConsultarActionPerformed
 
-    private void tfCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfCedulaActionPerformed
-
-    private void tfApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellido2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfApellido2ActionPerformed
-
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         try {
             int codigo = Integer.parseInt(tfCodPersona.getText());
@@ -391,14 +409,14 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 tfApellido1.setText("");
                 tfApellido2.setText("");
                 tfCedula.setText("");
-                cxCiudadNto.setSelectedIndex(0);
+                cxCiudades.setSelectedIndex(0);
                 msg = "Registro eliminado correctamente";
             } else {
                 msg = "No se pudo eliminar el registro";
             }
             Formulario.General.setMsg(response, lMsg, msg);
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Personas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
@@ -410,9 +428,11 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             String apellido1 = tfApellido1.getText();
             String apellido2 = tfApellido2.getText();
             String cedula = tfCedula.getText();
+            int index = cxCiudades.getSelectedIndex();
+            int idCiudad = ciudades.get(index).getCodigo();
 
             int response = conexion.fc_actu_persona(codigo, nombre1, nombre2,
-                    apellido1, apellido2, cedula);
+                    apellido1, apellido2, cedula, idCiudad);
             if (response == 1) {
                 msg = "Registro actualizado correctamente";
             } else {
@@ -420,7 +440,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             }
             Formulario.General.setMsg(response, lMsg, msg);
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Personas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bUpdateActionPerformed
 
@@ -431,9 +451,11 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             String apellido1 = tfApellido1.getText();
             String apellido2 = tfApellido2.getText();
             String cedula = tfCedula.getText();
+            int index = cxCiudades.getSelectedIndex();
+            int idCiudad = ciudades.get(index).getCodigo();
 
             int response = conexion.fc_inse_persona(conexion.recuSigteNumero("PERSONAS"),
-                    nombre1, nombre2, apellido1, apellido2, cedula);
+                    nombre1, nombre2, apellido1, apellido2, cedula, idCiudad);
             if (response == 1) {
                 tfCodPersona.setText("");
                 tfNombre1.setText("");
@@ -441,7 +463,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 tfApellido1.setText("");
                 tfApellido2.setText("");
                 tfCedula.setText("");
-                cxCiudadNto.setSelectedIndex(0);
+                cxCiudades.setSelectedIndex(0);
                 msg = "Registro insertado correctamente";
             } else {
                 msg = "No se pudo insertar el registro";
@@ -449,28 +471,44 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             Formulario.General.setMsg(response, lMsg, msg);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Personas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bCreateActionPerformed
 
     private void bMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMoreActionPerformed
         JFrame frame = new JFrame();
-        Productos pProductos = new Productos(conexion);
-        frame.add(pProductos);
+        Ciudades pCiudades = new Ciudades(conexion);
+        frame.add(pCiudades);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
     }//GEN-LAST:event_bMoreActionPerformed
 
+    private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
+        ciudades = Formulario.Ciudades.populateComboBox(cxCiudades, conexion);
+    }//GEN-LAST:event_bReloadActionPerformed
+
+    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+        cxCiudades.setSelectedIndex(0);
+        tfApellido1.setText("");
+        tfApellido2.setText("");
+        tfNombre1.setText("");
+        tfNombre2.setText("");
+        tfCedula.setText("");
+        tfCodPersona.setText("");
+    }//GEN-LAST:event_bCleanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bClean;
     private javax.swing.JButton bConsultar;
     private javax.swing.JButton bCreate;
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bMore;
+    private javax.swing.JButton bReload;
     private javax.swing.JButton bUpdate;
-    private javax.swing.JComboBox<String> cxCiudadNto;
+    private javax.swing.JComboBox<String> cxCiudades;
     private javax.swing.JLabel lMsg;
     private javax.swing.JLabel laApellido1;
     private javax.swing.JLabel laApellido2;

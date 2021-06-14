@@ -235,7 +235,7 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
                         .addComponent(bUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane1))
-            .addContainerGap(62, Short.MAX_VALUE))
+            .addContainerGap(88, Short.MAX_VALUE))
     );
 
     tpSParametros.addTab("Empresas", pEmpresas);
@@ -461,7 +461,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     pFacturaProvLayout.setHorizontalGroup(
         pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pFacturaProvLayout.createSequentialGroup()
-            .addGap(23, 23, 23)
+            .addGap(20, 20, 20)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pFacturaProvLayout.createSequentialGroup()
                     .addComponent(bCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -543,7 +543,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                 .addComponent(cxTipoFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(lTipoFactura)
                 .addComponent(lEstado))
-            .addGap(18, 18, 18)
+            .addGap(35, 35, 35)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pFacturaProvLayout.createSequentialGroup()
@@ -554,7 +554,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                     .addComponent(bEdit)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(bDelete2)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+            .addGap(20, 20, 20)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(lEstado1)
@@ -597,7 +597,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     );
     pFacturaVentaLayout.setVerticalGroup(
         pFacturaVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 378, Short.MAX_VALUE)
+        .addGap(0, 404, Short.MAX_VALUE)
     );
 
     tpSCaja.addTab("Factura Venta", pFacturaVenta);
@@ -735,7 +735,8 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
             facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet,
                 nroFacturaProv, conexion);
-            Formulario.FacturasProvDet.calcularTotal(facturasProvDet);
+            tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
+            lMsg.setText("");
         } else {
             msg = "Nro. Factura Proveedor no puede estar vacío";
             Formulario.General.setMsg(0, lMsg, msg);
@@ -756,7 +757,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                     response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
                     if (response == 1) {
                         facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
-                        Formulario.FacturasProvDet.calcularTotal(facturasProvDet);
+                        tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
                         msg = "Registro eliminado correctamente";
                     } else {
                         msg = "No se pudo eliminar el registro";

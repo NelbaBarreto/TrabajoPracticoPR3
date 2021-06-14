@@ -48,10 +48,6 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="27" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="laApellido1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="tfApellido1" min="-2" pref="220" max="-2" attributes="0"/>
@@ -64,47 +60,54 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="lMsg" min="-2" pref="332" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="tfNombre1" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="95" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="laNombre2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="tfNombre2" min="-2" pref="220" max="-2" attributes="0"/>
                                       <Component id="laApellido2" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="tfApellido2" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="tfCedula" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                      <Component id="laCedula" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Component id="bCreate" min="-2" pref="88" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="bUpdate" min="-2" pref="88" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="bDelete" min="-2" pref="88" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="laCodPersona" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Component id="tfCodPersona" min="-2" pref="49" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          <Component id="bConsultar" min="-2" pref="46" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace pref="18" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="laCiudadNto" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Component id="cxCiudadNto" min="-2" pref="180" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cxCiudades" min="-2" pref="180" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="bMore" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="laCiudadNto" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="bReload" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="bClean" min="-2" max="-2" attributes="0"/>
+                                          <Component id="tfNombre2" min="-2" pref="220" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laApellido1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="tfCedula" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Component id="laCedula" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="bCreate" min="-2" pref="88" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="bUpdate" min="-2" pref="88" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="bDelete" min="-2" pref="88" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="laCodPersona" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="tfCodPersona" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Component id="bConsultar" min="-2" pref="46" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -113,26 +116,34 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  <Component id="laCodPersona" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="tfCodPersona" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="bConsultar" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="laCodPersona" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="tfCodPersona" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="bConsultar" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="bClean" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laNombre1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laNombre2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="tfNombre1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="tfNombre2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="laNombre1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="laNombre2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="tfNombre1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="tfNombre2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="laApellido1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="laApellido2" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
@@ -143,15 +154,18 @@
                               <Component id="tfApellido2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="laCedula" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="laCedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="laCiudadNto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Component id="laCiudadNto" min="-2" max="-2" attributes="0"/>
+                      <Component id="bReload" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfCedula" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="cxCiudadNto" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="cxCiudades" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       </Group>
                       <Component id="bMore" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -209,6 +223,9 @@
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfNombre1.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfNombre1.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="bCreate">
           <Properties>
@@ -311,7 +328,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfNombre2.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfApellido1.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfApellido1.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="tfApellido2">
@@ -332,11 +349,8 @@
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfApellido2ActionPerformed"/>
-          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfNombre2.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfApellido2.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfApellido2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="tfNombre2">
@@ -379,11 +393,8 @@
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCedulaActionPerformed"/>
-          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfNombre2.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfNombre2.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfCedula.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfCedula.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="tfCodPersona">
@@ -489,7 +500,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/assets/img/more.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Cargar Producto"/>
+            <Property name="toolTipText" type="java.lang.String" value="Cargar Ciudad"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -501,7 +512,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMoreActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cxCiudadNto">
+        <Component class="javax.swing.JComboBox" name="cxCiudades">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ed" green="e8" red="e5" type="rgb"/>
@@ -518,7 +529,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxCiudadNto.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;productos = Formulario.Productos.populateComboBox(cxCiudadNto, conexion);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxCiudades.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;ciudades = Formulario.Ciudades.populateComboBox(cxCiudades, conexion);"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -532,6 +543,50 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Ciudad de Nacimiento"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bReload">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/img/reload.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Agregar Nuevo "/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bReloadActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bClean">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/img/broom.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Limpiar"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="c8" green="5f" red="ac" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bCleanActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

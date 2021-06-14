@@ -9,7 +9,7 @@ import db.bdOracle;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
-import models.Producto;
+import models.Ciudad;
 import utils.Formulario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,12 +19,12 @@ import java.util.logging.Logger;
  *
  * @author HP
  */
-public class Productos extends javax.swing.JPanel {
-    private List<Producto> productos;
+public class Ciudades extends javax.swing.JPanel {
+    private List<Ciudad> ciudades;
     private static bdOracle conexion;
     private String msg;
     
-    public Productos(bdOracle bd) {
+    public Ciudades(bdOracle bd) {
         conexion = bd;
         initComponents();
     }
@@ -42,10 +42,10 @@ public class Productos extends javax.swing.JPanel {
         pEmpresas = new javax.swing.JPanel();
         lId = new javax.swing.JLabel();
         lId1 = new javax.swing.JLabel();
-        tfCodProducto = new javax.swing.JTextField();
+        tfCodCiudad = new javax.swing.JTextField();
         tfDescripcion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lProductos = new javax.swing.JList<>();
+        lCiudades = new javax.swing.JList<>();
         bCreate = new javax.swing.JButton();
         bUpdate = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
@@ -54,19 +54,19 @@ public class Productos extends javax.swing.JPanel {
         pEmpresas.setBackground(new java.awt.Color(255, 255, 255));
 
         lId.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        lId.setText("Código de Producto");
+        lId.setText("Código de Ciudad");
 
         lId1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         lId1.setText("Descripción");
 
-        tfCodProducto.setBackground(new java.awt.Color(229, 232, 237));
-        tfCodProducto.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        tfCodProducto.setBorder(null);
-        tfCodProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tfCodProducto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        tfCodProducto.setEnabled(false);
-        tfCodProducto.setBorder(BorderFactory.createCompoundBorder(
-            tfCodProducto.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        tfCodCiudad.setBackground(new java.awt.Color(229, 232, 237));
+        tfCodCiudad.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        tfCodCiudad.setBorder(null);
+        tfCodCiudad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tfCodCiudad.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        tfCodCiudad.setEnabled(false);
+        tfCodCiudad.setBorder(BorderFactory.createCompoundBorder(
+            tfCodCiudad.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
     tfDescripcion.setBackground(new java.awt.Color(229, 232, 237));
     tfDescripcion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -75,16 +75,16 @@ public class Productos extends javax.swing.JPanel {
     tfDescripcion.setBorder(BorderFactory.createCompoundBorder(
         tfDescripcion.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-lProductos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(172, 95, 200), 1, true));
-lProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-lProductos.setSelectionBackground(new java.awt.Color(229, 232, 237));
-lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+lCiudades.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(172, 95, 200), 1, true));
+lCiudades.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+lCiudades.setSelectionBackground(new java.awt.Color(229, 232, 237));
+lCiudades.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
     public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-        lProductosValueChanged(evt);
+        lCiudadesValueChanged(evt);
     }
     });
-    productos = Formulario.Productos.populateList(lProductos, conexion);
-    jScrollPane1.setViewportView(lProductos);
+    ciudades = Formulario.Ciudades.populateList(lCiudades, conexion);
+    jScrollPane1.setViewportView(lCiudades);
 
     bCreate.setBackground(new java.awt.Color(255, 255, 255));
     bCreate.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -133,7 +133,7 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addGap(27, 27, 27)
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tfCodProducto)
+                        .addComponent(tfCodCiudad)
                         .addComponent(tfDescripcion)
                         .addGroup(pEmpresasLayout.createSequentialGroup()
                             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +153,7 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                         .addGroup(pEmpresasLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(27, 27, 27))
     );
@@ -165,7 +165,7 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addComponent(lId)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(tfCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCodCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(25, 25, 25)
                     .addComponent(lId1)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -178,22 +178,26 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                         .addComponent(bUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane1))
-            .addContainerGap(106, Short.MAX_VALUE))
+            .addContainerGap(41, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 572, Short.MAX_VALUE)
+        .addGap(0, 567, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 423, Short.MAX_VALUE)
+        .addGap(0, 358, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(pEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)))
     );
@@ -206,12 +210,12 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                 msg = "El campo descripción no puede estar vacío";
                 Formulario.General.setMsg(0, lMsg, msg);
             } else {
-                int response = conexion.fc_inse_producto(conexion.recuSigteNumero("PRODUCTOS"), descripcion);
+                int response = conexion.fc_inse_ciudad(conexion.recuSigteNumero("CIUDADES"), descripcion);
                 if (response == 1) {
-                    lProductos.clearSelection();
-                    productos = Formulario.Productos.populateList(lProductos, conexion);
+                    lCiudades.clearSelection();
+                    ciudades = Formulario.Ciudades.populateList(lCiudades, conexion);
                     tfDescripcion.setText("");
-                    tfCodProducto.setText("");
+                    tfCodCiudad.setText("");
                     msg = "Registro insertado correctamente";
                 } else {
                     msg = "No se pudo insertar el registro";
@@ -219,58 +223,58 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
                 Formulario.General.setMsg(response, lMsg, msg);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ciudad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bCreateActionPerformed
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
         try {
-            int id = Integer.parseInt(tfCodProducto.getText());
+            int id = Integer.parseInt(tfCodCiudad.getText());
             String descripcion = tfDescripcion.getText();
 
-            int response = conexion.fc_actu_producto(id, descripcion);
+            int response = conexion.fc_actu_ciudad(id, descripcion);
             if (response == 1) {
-                productos = Formulario.Productos.populateList(lProductos, conexion);
+                ciudades = Formulario.Ciudades.populateList(lCiudades, conexion);
                 msg = "Registro actualizado correctamente";
             } else {
                 msg = "No se pudo actualizar el registro";
             }
             Formulario.General.setMsg(response, lMsg, msg);
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ciudad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bUpdateActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         try {
-            int codigo = Integer.parseInt(tfCodProducto.getText());
+            int codigo = Integer.parseInt(tfCodCiudad.getText());
 
-            int response = conexion.fc_dele_producto(codigo);
+            int response = conexion.fc_dele_ciudad(codigo);
             if (response == 1) {
-                lProductos.clearSelection();
-                productos = Formulario.Productos.populateList(lProductos, conexion);
+                lCiudades.clearSelection();
+                ciudades = Formulario.Ciudades.populateList(lCiudades, conexion);
                 tfDescripcion.setText("");
-                tfCodProducto.setText("");
+                tfCodCiudad.setText("");
                 msg = "Registro eliminado correctamente";
             } else {
                 msg = "No se pudo eliminar el registro";
             }
             Formulario.General.setMsg(response, lMsg, msg);
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ciudad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
-    private void lProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lProductosValueChanged
-        if (lProductos.getSelectedValue() != null) {
-            String descripcion = lProductos.getSelectedValue();
-            int index = lProductos.getSelectedIndex();
-            String id = String.valueOf(productos.get(index).getCodigo());
+    private void lCiudadesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lCiudadesValueChanged
+        if (lCiudades.getSelectedValue() != null) {
+            String descripcion = lCiudades.getSelectedValue();
+            int index = lCiudades.getSelectedIndex();
+            String id = String.valueOf(ciudades.get(index).getCodigo());
 
-            tfCodProducto.setText(id);
+            tfCodCiudad.setText(id);
             tfDescripcion.setText(descripcion);
         }
-    }//GEN-LAST:event_lProductosValueChanged
+    }//GEN-LAST:event_lCiudadesValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -278,12 +282,12 @@ lProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener(
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bUpdate;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lCiudades;
     private javax.swing.JLabel lId;
     private javax.swing.JLabel lId1;
     private javax.swing.JLabel lMsg;
-    private javax.swing.JList<String> lProductos;
     private javax.swing.JPanel pEmpresas;
-    private javax.swing.JTextField tfCodProducto;
+    private javax.swing.JTextField tfCodCiudad;
     private javax.swing.JTextField tfDescripcion;
     // End of variables declaration//GEN-END:variables
 }

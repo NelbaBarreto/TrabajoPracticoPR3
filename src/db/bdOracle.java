@@ -72,35 +72,37 @@ public class bdOracle{
     
     // Funciones para [PERSONAS]
     public int fc_inse_persona(int cod, String nombre1, String nombre2, 
-        String apellido1, String apellido2, String cedula) throws SQLException {
+        String apellido1, String apellido2, String cedula, int cod_ciudad) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_INSE_PERSONA(?, ?, ?, ?, ?, ?, ?) }");
+        cs = conn.prepareCall("{ call PC_INSE_PERSONA(?, ?, ?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, cod);
         cs.setString(2, nombre1);
         cs.setString(3, nombre2);
         cs.setString(4, apellido1);
         cs.setString(5, apellido2);
         cs.setString(6, cedula);
-        cs.registerOutParameter(7, Types.INTEGER);
+        cs.setInt(7, cod_ciudad);
+        cs.registerOutParameter(8, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(7);
+        return cs.getInt(8);
     }
     
     public int fc_actu_persona(int cod, String nombre1, String nombre2, 
-        String apellido1, String apellido2, String cedula) throws SQLException {
+        String apellido1, String apellido2, String cedula, int cod_ciudad) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_ACTU_PERSONA(?, ?, ?, ?, ?, ?, ?) }");
+        cs = conn.prepareCall("{ call PC_ACTU_PERSONA(?, ?, ?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, cod);
         cs.setString(2, nombre1);
         cs.setString(3, nombre2);
         cs.setString(4, apellido1);
         cs.setString(5, apellido2);
         cs.setString(6, cedula);
-        cs.registerOutParameter(7, Types.INTEGER);
+        cs.setInt(7, cod_ciudad);
+        cs.registerOutParameter(8, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(7);
+        return cs.getInt(8);
     }
     
     public int fc_dele_persona(int cod) throws SQLException {
@@ -232,4 +234,38 @@ public class bdOracle{
     public int fc_actu_factura_prov(int nroFacturaProv, java.util.Date dtToday, int estado, int tipo, int idEmpresa) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    // Funciones para [CIUDADES]
+    public int fc_inse_ciudad(int cod, String desc) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_INSE_CIUDAD(?, ?, ?) }");
+        cs.setInt(1, cod);
+        cs.setString(2, desc);
+        cs.registerOutParameter(3, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(3);
+    }
+    
+    public int fc_actu_ciudad(int cod, String desc) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_ACTU_CIUDAD(?, ?, ?) }");
+        cs.setInt(1, cod);
+        cs.setString(2, desc);
+        cs.registerOutParameter(3, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(3);
+    }
+    
+    public int fc_dele_ciudad(int cod) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_DELE_CIUDAD(?, ?) }");
+        cs.setInt(1, cod);
+        cs.registerOutParameter(2, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(2);
+    }
+    
 }
