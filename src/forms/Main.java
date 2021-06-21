@@ -5,7 +5,6 @@ package forms;
  * @author Nelba Barreto
  */
 import db.bdOracle;
-import forms.ABM.Productos;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.ResultSet;
@@ -66,7 +65,6 @@ public class Main extends javax.swing.JFrame {
         lMsg1 = new javax.swing.JLabel();
         pMantenimientos = new javax.swing.JPanel();
         tpSMantenimiento = new javax.swing.JTabbedPane();
-        pRecepciones = new javax.swing.JPanel();
         pFacturaProv = new javax.swing.JPanel();
         laEmpresa = new javax.swing.JLabel();
         cxEmpresa = new javax.swing.JComboBox<>();
@@ -261,21 +259,8 @@ lEmpresa.addListSelectionListener(new javax.swing.event.ListSelectionListener() 
     tpSMantenimiento.setVerifyInputWhenFocusTarget(false);
     forms.ABM.Personas abmPersonas = new forms.ABM.Personas(conexion);
     tpSMantenimiento.addTab("Personas", abmPersonas);
-
-    pRecepciones.setBackground(new java.awt.Color(255, 255, 255));
-
-    javax.swing.GroupLayout pRecepcionesLayout = new javax.swing.GroupLayout(pRecepciones);
-    pRecepciones.setLayout(pRecepcionesLayout);
-    pRecepcionesLayout.setHorizontalGroup(
-        pRecepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
-    );
-    pRecepcionesLayout.setVerticalGroup(
-        pRecepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
-    );
-
-    tpSMantenimiento.addTab("Recepciones", pRecepciones);
+    forms.ABM.Recepciones abmRecepciones = new forms.ABM.Recepciones(conexion);
+    tpSMantenimiento.addTab("Recepciones", abmRecepciones);
 
     pFacturaProv.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -996,7 +981,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel pFacturaVenta;
     private javax.swing.JPanel pMantenimientos;
     private javax.swing.JPanel pParametros;
-    private javax.swing.JPanel pRecepciones;
     private javax.swing.JTable tFacturaProvDet;
     private javax.swing.JTextField tfDescripcion;
     private javax.swing.JTextField tfFecha;
