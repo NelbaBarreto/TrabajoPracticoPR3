@@ -1,16 +1,11 @@
 package forms.ABM;
 
-import forms.ABM.Productos;
 import forms.Main;
-import java.sql.ResultSet;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import models.Producto;
 import utils.Formulario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.SQLException;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import models.FacturaProvDet;

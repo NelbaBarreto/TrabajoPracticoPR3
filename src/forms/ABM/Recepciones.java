@@ -5,8 +5,7 @@
  */
 package forms.ABM;
 
-import db.bdOracle;
-import forms.AddFacturaProvDet;
+import db.bdOracle;;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -532,7 +531,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bDelete2ActionPerformed
 
     private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
+     /*   if (!tfNroFactProv.getText().equals("")) {
             int EDITAR = 2;
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
             int index = tFacturaProvDet.getSelectedRow();
@@ -544,7 +543,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 int item = facturasProvDet.get(index).getItem();
 
                 JFrame frame = new JFrame();
-                AddFacturaProvDet pAddFacturaProvDet = new AddFacturaProvDet(conexion, nroFacturaProv, EDITAR, item);
+                FacturasProvDet pAddFacturaProvDet = new Recepciones(conexion, nroFacturaProv, EDITAR, item);
                 frame.add(pAddFacturaProvDet);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -554,11 +553,11 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         } else {
             msg = "Nro. Factura Proveedor no puede estar vacío";
             Formulario.General.setMsg(0, lMsg, msg);
-        }
+        }*/
     }//GEN-LAST:event_bEditActionPerformed
 
     private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
+        /*if (!tfNroFactProv.getText().equals("")) {
             int INSERTAR = 1;
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
 
@@ -572,7 +571,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         } else {
             msg = "Nro. Factura Proveedor no puede estar vacío";
             Formulario.General.setMsg(0, lMsg, msg);
-        }
+        }*/
     }//GEN-LAST:event_bAddActionPerformed
 
     private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
