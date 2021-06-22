@@ -263,6 +263,41 @@ public class Formulario {
         }
     }
 
+    public static class Recepciones {
+
+        public static List<FacturaProvDet> populateTable(JTable tFacturaProvDet,
+                int nroFacturaProv, bdOracle conexion) {
+            List<FacturaProvDet> facturasProvDet = new ArrayList<FacturaProvDet>();
+            String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad", "Importe"};
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(columnNames);
+
+            try {
+                FacturaProvDet facturaProvDetalle = null;
+                String query = "SELECT fp.rede_item, fp.rede_cod_producto, fp.rede_cantidad, p.prod_descripcion FROM recepciones_det fp, productos p "
+                        + "WHERE fp.rede_nro_recepcion = " + nroFacturaProv + " AND fp.rede_cod_producto = p.prod_cod_producto ORDER BY fp.rede_item";
+
+                ResultSet rset = conexion.sql(query);
+
+                while (rset.next()) {
+                    facturaProvDetalle = new FacturaProvDet(rset.getInt(1),
+                            0, rset.getInt(3), rset.getInt(4), 0, rset.getString(6));
+                    facturasProvDet.add(facturaProvDetalle);
+                    String[] data = {String.valueOf(facturaProvDetalle.getItem()),
+                        String.valueOf(facturaProvDetalle.getCodigoProducto()), facturaProvDetalle.getDescripcion(), String.valueOf(facturaProvDetalle.getCantidad()),
+                        String.valueOf(facturaProvDetalle)};
+                    model.addRow(data);
+                }
+                tFacturaProvDet.setModel(model);
+
+                return facturasProvDet;
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+    }
+
     public static class General {
 
         public static boolean resultSetIsEmpty(ResultSet rs) throws SQLException {

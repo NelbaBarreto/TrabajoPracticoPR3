@@ -150,14 +150,14 @@ public class bdOracle{
     
     // Funciones para [FACTURAS_PROV]
     public int fc_inse_factura_prov(int nro, String fecha, int estado, 
-            int tipo_factura, int id_empresa) throws SQLException {
+            int tipoFactura, int idEmpresa) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_INSE_FACTURA_PROV(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, nro);
         cs.setString(2, fecha);
         cs.setInt(3, estado);
-        cs.setInt(4, tipo_factura);
-        cs.setInt(5, id_empresa);
+        cs.setInt(4, tipoFactura);
+        cs.setInt(5, idEmpresa);
         cs.registerOutParameter(6, Types.INTEGER);
         cs.execute();
 
@@ -165,14 +165,14 @@ public class bdOracle{
     }
     
     public int fc_actu_factura_prov(int nro, String fecha, int estado, 
-            int tipo_factura, int id_empresa) throws SQLException {
+            int tipoFactura, int idEmpresa) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_ACTU_FACTURA_PROV(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, nro);
         cs.setString(2, fecha);
         cs.setInt(3, estado);
-        cs.setInt(4, tipo_factura);
-        cs.setInt(5, id_empresa);
+        cs.setInt(4, tipoFactura);
+        cs.setInt(5, idEmpresa);
         cs.registerOutParameter(6, Types.INTEGER);
         cs.execute();
 
@@ -191,14 +191,14 @@ public class bdOracle{
     
     // Funciones para [FACTURAS_PROV_DET]
     public int fc_inse_factura_prov_det(int item, int cantidad, int importe, 
-            int nro_factura_prov, int cod_prod) throws SQLException {
+            int nroFacturaProv, int codProd) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_INSE_FACTURA_PROV_DET(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, item);
         cs.setInt(2, cantidad);
         cs.setInt(3, importe);
-        cs.setInt(4, nro_factura_prov);
-        cs.setInt(5, cod_prod);
+        cs.setInt(4, nroFacturaProv);
+        cs.setInt(5, codProd);
         cs.registerOutParameter(6, Types.INTEGER);
         cs.execute();
 
@@ -206,33 +206,29 @@ public class bdOracle{
     }
     
     public int fc_actu_factura_prov_det(int item, int cantidad, int importe, 
-            int nro_factura_prov, int cod_prod) throws SQLException {
+            int nroFacturaProv, int codProd) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_ACTU_FACTURA_PROV_DET(?, ?, ?, ?, ?, ?) }");
         cs.setInt(1, item);
         cs.setInt(2, cantidad);
         cs.setInt(3, importe);
-        cs.setInt(4, nro_factura_prov);
-        cs.setInt(5, cod_prod);
+        cs.setInt(4, nroFacturaProv);
+        cs.setInt(5, codProd);
         cs.registerOutParameter(6, Types.INTEGER);
         cs.execute();
 
         return cs.getInt(6);
     }
     
-    public int fc_dele_factura_prov_det(int item, int nro_factura_prov) throws SQLException {
+    public int fc_dele_factura_prov_det(int item, int nroFacturaProv) throws SQLException {
         CallableStatement cs = null;
         cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?, ?) }");
         cs.setInt(1, item);
-        cs.setInt(2, nro_factura_prov);
+        cs.setInt(2, nroFacturaProv);
         cs.registerOutParameter(3, Types.INTEGER);
         cs.execute();
 
         return cs.getInt(3);
-    }
-
-    public int fc_actu_factura_prov(int nroFacturaProv, java.util.Date dtToday, int estado, int tipo, int idEmpresa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     // Funciones para [CIUDADES]
@@ -268,4 +264,82 @@ public class bdOracle{
         return cs.getInt(2);
     }
     
+    // Funciones para [RECEPCIONES]
+    public int fc_inse_recepcion(int nro, String fecha, 
+            String fechaFact, int nroFacturaProv) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_INSE_RECEPCION(?, ?, ?, ?, ?) }");
+        cs.setInt(1, nro);
+        cs.setString(2, fecha);
+        cs.setString(3, fechaFact);
+        cs.setInt(4, nroFacturaProv);
+        cs.registerOutParameter(5, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(5);
+    }
+    
+    public int fc_actu_recepcion(int nro, int nroFacturaProv, 
+            String fecha, String fechaFact) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_ACTU_RECEPCION(?, ?, ?, ?, ?) }");
+        cs.setInt(1, nro);
+        cs.setString(2, fecha);
+        cs.setString(3, fechaFact);
+        cs.setInt(4, nroFacturaProv);
+        cs.registerOutParameter(5, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(6);
+    }
+    
+    public int fc_dele_recepciones(int nro) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_DELE_RECEPCION(?) }");
+        cs.setInt(1, nro);
+        cs.registerOutParameter(2, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(2);
+    }
+    
+    // Funciones para [FACTURAS_PROV_DET]
+    public int fc_inse_recepcion_det(int item, int cantidad, 
+            int nroRecepcion, int codProducto) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_INSE_RECEPCION_DET(?, ?, ?, ?, ?) }");
+        cs.setInt(1, item);
+        cs.setInt(2, cantidad);
+        cs.setInt(3, nroRecepcion);
+        cs.setInt(4, codProducto);
+        cs.registerOutParameter(5, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(5);
+    }
+    
+    public int fc_actu_recepcion_det(int item, int cantidad, 
+            int nroRecepcion, int codProducto) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_ACTU_RECEPCION_DET(?, ?, ?, ?, ?) }");
+        cs.setInt(1, item);
+        cs.setInt(2, cantidad);
+        cs.setInt(3, nroRecepcion);
+        cs.setInt(4, codProducto);
+        cs.registerOutParameter(5, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(5);
+    }
+    
+    public int fc_dele_recepcion_det(int item, int nroRecepcion) throws SQLException {
+        CallableStatement cs = null;
+        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?, ?) }");
+        cs.setInt(1, item);
+        cs.setInt(2, nroRecepcion);
+        cs.registerOutParameter(3, Types.INTEGER);
+        cs.execute();
+
+        return cs.getInt(3);
+    }
 }
