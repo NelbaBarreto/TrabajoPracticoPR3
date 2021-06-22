@@ -1,7 +1,7 @@
-package forms;
+package forms.ABM;
 
-import db.bdOracle;
 import forms.ABM.Productos;
+import forms.Main;
 import java.sql.ResultSet;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -11,26 +11,24 @@ import utils.Formulario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import models.FacturaProvDet;
 
 /**
  *
  * @author Nelba Barreto
  */
-
-public class AddFacturaProvDet extends javax.swing.JPanel {
+public class FacturasProvDet extends javax.swing.JPanel {
 
     private List<Producto> productos;
-    private static bdOracle conexion;
     private String msg;
     private int operacion;
-    private int nroFacturaProv;
-    private int item;
+    private Main main;
 
-    public AddFacturaProvDet(bdOracle bd, int nroFacturaProv, int operacion, int item) {
-        conexion = bd;
-        this.nroFacturaProv = nroFacturaProv;
+    public FacturasProvDet(int operacion, Main main) {
         this.operacion = operacion;
-        this.item = item;
+        this.main = main;
         initComponents();
         setDefaultValues();
     }
@@ -89,7 +87,7 @@ public class AddFacturaProvDet extends javax.swing.JPanel {
     cxProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
     cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
     cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
-    productos = Formulario.Productos.populateComboBox(cxProductos, conexion);
+    productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());
 
     bMore.setBackground(new java.awt.Color(255, 255, 255));
     bMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/more.png"))); // NOI18N
@@ -196,92 +194,89 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
     );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void close() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.dispose();
+    }
+
     private void setDefaultValues() {
         if (operacion == 2) {
-            try {
-                String query = "SELECT fpde_cod_producto, fpde_cantidad, fpde_importe "
-                        + "FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv
-                        + " AND fpde_item = " + item;
-                ResultSet rset = conexion.sql(query);
-                if (Formulario.General.resultSetIsEmpty(rset) == true) {
-                    Formulario.General.setMsg(0, lMsg, msg);
-                } else {
-                    do {
-                        System.out.println(rset.getString(2));
-                        cxProductos.setSelectedIndex(Formulario.Productos.findProducto(rset.getInt(1), productos));
-                        tfCantidad.setText(rset.getString(2));
-                        tfImporte.setText(rset.getString(3));
-                    } while (rset.next());
-                }
+            int index = main.gettFacturaProvDet().getSelectedRow();
+            
+            int codigoProducto = Integer.parseInt(main.gettFacturaProvDet().getValueAt(index, 1).toString());
+            int selectedProducto = Formulario.Productos.findProducto(codigoProducto, productos);
+            String cantidad = main.gettFacturaProvDet().getValueAt(index, 3).toString();
+            String importe = main.gettFacturaProvDet().getValueAt(index, 4).toString();
+            
+            tfCantidad.setText(cantidad);
+            tfImporte.setText(importe);
+            cxProductos.setSelectedIndex(selectedProducto);
+        }
+    }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(AddFacturaProvDet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private void updateFacturaProvDet() {
+        FacturaProvDet facturaProvDet = null;
+        int nroFacturaProv = Integer.parseInt(main.getTfNroFactProv().getText());
+        int codigoProducto;
+        String descripcion;
+        int cantidad;
+        int importe;
+
+        for (int i = 0; i < main.gettFacturaProvDet().getRowCount(); i++) {
+            codigoProducto = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 1).toString());
+            descripcion = main.gettFacturaProvDet().getValueAt(i, 2).toString();
+            cantidad = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 3).toString());
+            importe = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 4).toString());
+
+            facturaProvDet = new FacturaProvDet(0, nroFacturaProv, codigoProducto, cantidad, importe, descripcion);
+            main.getFacturasProvDet().add(facturaProvDet);
         }
     }
 
     private void createFacturaProvDetalle() {
-        try {
-            // Código Producto
+        DefaultTableModel model = (DefaultTableModel) main.gettFacturaProvDet().getModel();
+
+        if (tfCantidad.getText().equals("") || tfImporte.getText().equals("")) {
+            msg = "Debe llenar todos los campos";
+            Formulario.General.setMsg(0, lMsg, msg);
+        } else {
+            // Cantidad
+            int cantidad = Integer.parseInt(tfCantidad.getText());
+            // Importe
+            int importe = Integer.parseInt(tfImporte.getText());
+            // Producto
             int index = cxProductos.getSelectedIndex();
             int codigoProducto = productos.get(index).getCodigo();
+            String descripcion = productos.get(index).getDescripcion();
 
-            if (tfCantidad.getText().equals("") || tfImporte.getText().equals("")) {
-                msg = "Debe llenar todos los campos";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                // Cantidad
-                int cantidad = Integer.parseInt(tfCantidad.getText());
-                // Importe
-                int importe = Integer.parseInt(tfImporte.getText());
+            model.insertRow(model.getRowCount(), new Object[]{0, codigoProducto, descripcion,
+                cantidad, importe});
+            updateFacturaProvDet();
 
-                int response = conexion.fc_inse_factura_prov_det(conexion.recuSigteNumero("FACTURAS_PROV_DET", nroFacturaProv),
-                        cantidad, importe, nroFacturaProv, codigoProducto);
-                if (response == 1) {
-                    cxProductos.setSelectedIndex(0);
-                    tfCantidad.setText("");
-                    tfImporte.setText("");
-                    msg = "Registro insertado correctamente";
-                } else {
-                    msg = "No se pudo insertar el registro";
-                }
-                Formulario.General.setMsg(response, lMsg, msg);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddFacturaProvDet.class.getName()).log(Level.SEVERE, null, ex);
+            close();
         }
     }
 
     private void editFacturaProvDetalle() {
-        try {
-            // Código Producto
-            int index = cxProductos.getSelectedIndex();
-            int codigoProducto = productos.get(index).getCodigo();
+        DefaultTableModel model = (DefaultTableModel) main.gettFacturaProvDet().getModel();
+        int index = main.gettFacturaProvDet().getSelectedRow();
 
-            if (tfCantidad.getText().equals("") || tfImporte.getText().equals("")) {
-                msg = "Debe llenar todos los campos";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                // Cantidad
-                int cantidad = Integer.parseInt(tfCantidad.getText());
-                // Importe
-                int importe = Integer.parseInt(tfImporte.getText());
+        int codigoProducto = productos.get(cxProductos.getSelectedIndex()).getCodigo();
+        String descripcion = productos.get(cxProductos.getSelectedIndex()).getDescripcion();
+        String cantidad = tfCantidad.getText();
+        String importe = tfImporte.getText();
 
-                int response = conexion.fc_actu_factura_prov_det(item,
-                        cantidad, importe, nroFacturaProv, codigoProducto);
-                if (response == 1) {
-                    cxProductos.setSelectedIndex(0);
-                    tfCantidad.setText("");
-                    tfImporte.setText("");
-                    msg = "Registro actualizado correctamente";
-                } else {
-                    msg = "No se pudo actualizar el registro";
-                }
-                Formulario.General.setMsg(response, lMsg, msg);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddFacturaProvDet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        model.setValueAt(codigoProducto, index, 1);
+        model.setValueAt(descripcion, index, 2);
+        model.setValueAt(cantidad, index, 3);
+        model.setValueAt(importe, index, 4);
+        
+        main.getFacturasProvDet().get(index).setCodigoProducto(codigoProducto);
+        main.getFacturasProvDet().get(index).setDescripcion(descripcion);
+        main.getFacturasProvDet().get(index).setCantidad(Integer.parseInt(cantidad));
+        main.getFacturasProvDet().get(index).setImporte(Integer.parseInt(importe));
+
+        close();
     }
 
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
@@ -294,7 +289,7 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
 
     private void bMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMoreActionPerformed
         JFrame frame = new JFrame();
-        Productos pProductos = new Productos(conexion);
+        Productos pProductos = new Productos(main.getConexion());
         frame.add(pProductos);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -303,7 +298,7 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bMoreActionPerformed
 
     private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
-        productos = Formulario.Productos.populateComboBox(cxProductos, conexion);
+        productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());
     }//GEN-LAST:event_bReloadActionPerformed
 
 
