@@ -25,6 +25,7 @@ import models.Empresa;
 import models.FacturaProvDet;
 import models.Producto;
 import models.Ciudad;
+import models.RecepcionDet;
 
 /**
  *
@@ -107,7 +108,7 @@ public class Formulario {
 
         public static List<FacturaProvDet> populateTable(JTable tFacturaProvDet,
                 int nroFacturaProv, bdOracle conexion) {
-            List<FacturaProvDet> facturasProvDet = new ArrayList<FacturaProvDet>();
+            List<FacturaProvDet> facturasProvDet = new ArrayList<>();
             String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad", "Importe"};
             DefaultTableModel model = new DefaultTableModel();
             model.setColumnIdentifiers(columnNames);
@@ -160,10 +161,10 @@ public class Formulario {
 
         public static List<Producto> populateComboBox(JComboBox cxProductos, bdOracle conexion) {
             DefaultComboBoxModel<String> rowValues = new DefaultComboBoxModel<>();
-            List<Producto> productos = new ArrayList<Producto>();
+            List<Producto> productos = new ArrayList<>();
 
             try {
-                productos = new ArrayList<Producto>();
+                productos = new ArrayList<>();
                 Producto producto = null;
                 String query = "SELECT PROD_COD_PRODUCTO, PROD_DESCRIPCION "
                         + "FROM PRODUCTOS ORDER BY PROD_DESCRIPCION";
@@ -186,7 +187,7 @@ public class Formulario {
             List<Producto> productos;
 
             try {
-                productos = new ArrayList<Producto>();
+                productos = new ArrayList<>();
                 Producto currentProducto = null;
                 int i = 0;
                 String query = "SELECT PROD_COD_PRODUCTO, PROD_DESCRIPCION "
@@ -214,10 +215,10 @@ public class Formulario {
 
         public static List<Ciudad> populateComboBox(JComboBox cxCiudades, bdOracle conexion) {
             DefaultComboBoxModel<String> rowValues = new DefaultComboBoxModel<>();
-            List<Ciudad> ciudades = new ArrayList<Ciudad>();
+            List<Ciudad> ciudades = new ArrayList<>();
 
             try {
-                ciudades = new ArrayList<Ciudad>();
+                ciudades = new ArrayList<>();
                 Ciudad ciudad = null;
                 String query = "SELECT CIUD_COD_CIUDAD, CIUD_DESCRIPCION "
                         + "FROM CIUDADES ORDER BY CIUD_COD_CIUDAD";
@@ -239,7 +240,7 @@ public class Formulario {
             List<Ciudad> ciudades;
 
             try {
-                ciudades = new ArrayList<Ciudad>();
+                ciudades = new ArrayList<>();
                 Ciudad currentciudad = null;
                 int i = 0;
                 String query = "SELECT CIUD_COD_CIUDAD, CIUD_DESCRIPCION "
@@ -265,36 +266,76 @@ public class Formulario {
 
     public static class Recepciones {
 
-        public static List<FacturaProvDet> populateTable(JTable tFacturaProvDet,
-                int nroFacturaProv, bdOracle conexion) {
-            List<FacturaProvDet> facturasProvDet = new ArrayList<FacturaProvDet>();
-            String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad", "Importe"};
+        public static List<RecepcionDet> populateTable(JTable tFacturaProvDet,
+                int nroRecepcion, bdOracle conexion) {
+            List<RecepcionDet> recepcionesDet = new ArrayList<>();
+            String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad"};
             DefaultTableModel model = new DefaultTableModel();
             model.setColumnIdentifiers(columnNames);
 
             try {
-                FacturaProvDet facturaProvDetalle = null;
-                String query = "SELECT fp.rede_item, fp.rede_cod_producto, fp.rede_cantidad, p.prod_descripcion FROM recepciones_det fp, productos p "
-                        + "WHERE fp.rede_nro_recepcion = " + nroFacturaProv + " AND fp.rede_cod_producto = p.prod_cod_producto ORDER BY fp.rede_item";
+                RecepcionDet recepcionDet = null;
+                String query = "SELECT d.rede_item, d.rede_cantidad, d.rede_nro_recepcion, d.rede_cod_producto, p.prod_descripcion "
+                        + "FROM recepciones_det d, productos p WHERE rede_nro_recepcion = " + nroRecepcion
+                        + "AND rede_cod_producto = p.prod_cod_producto";
 
                 ResultSet rset = conexion.sql(query);
 
                 while (rset.next()) {
-                    facturaProvDetalle = new FacturaProvDet(rset.getInt(1),
-                            0, rset.getInt(3), rset.getInt(4), 0, rset.getString(6));
-                    facturasProvDet.add(facturaProvDetalle);
-                    String[] data = {String.valueOf(facturaProvDetalle.getItem()),
-                        String.valueOf(facturaProvDetalle.getCodigoProducto()), facturaProvDetalle.getDescripcion(), String.valueOf(facturaProvDetalle.getCantidad()),
-                        String.valueOf(facturaProvDetalle)};
+                    recepcionDet = new RecepcionDet(rset.getInt(1),
+                            rset.getInt(4), rset.getInt(2), rset.getString(5), rset.getInt(3));
+                    recepcionesDet.add(recepcionDet);
+                    String[] data = {String.valueOf(recepcionDet.getItem()),
+                        String.valueOf(recepcionDet.getCodigoProducto()), recepcionDet.getDescripcion(), String.valueOf(recepcionDet.getCantidad())};
                     model.addRow(data);
                 }
                 tFacturaProvDet.setModel(model);
 
-                return facturasProvDet;
+                return recepcionesDet;
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
             }
+        }
+
+        public static List<RecepcionDet> populateTable2(JTable tFacturaProvDet,
+                int nroFacturaProv, bdOracle conexion) {
+            List<RecepcionDet> recepcionesDet = new ArrayList<>();
+            String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad"};
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(columnNames);
+
+            try {
+                RecepcionDet recepcionDet = null;
+                String query = "SELECT d.fpde_item, d.fpde_cantidad, d.fpde_nro_factura_prov, d.fpde_cod_producto, p.prod_descripcion "
+                        + "FROM facturas_prov_det d, productos p WHERE d.fpde_nro_factura_prov = " + nroFacturaProv
+                        + "AND d.fpde_cod_producto =  p.prod_cod_producto";
+
+                ResultSet rset = conexion.sql(query);
+
+                while (rset.next()) {
+                    recepcionDet = new RecepcionDet(rset.getInt(1),
+                            rset.getInt(4), rset.getInt(2), rset.getString(5), rset.getInt(3));
+                    recepcionesDet.add(recepcionDet);
+                    String[] data = {String.valueOf(recepcionDet.getItem()),
+                        String.valueOf(recepcionDet.getCodigoProducto()), recepcionDet.getDescripcion(), String.valueOf(recepcionDet.getCantidad())};
+                    model.addRow(data);
+                }
+                tFacturaProvDet.setModel(model);
+
+                return recepcionesDet;
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+
+        public static List<RecepcionDet> clearTable(JTable tRecepcionesDet) {
+            String[] columnNames = {"Ítem", "Producto", "Descripción", "Cantidad"};
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(columnNames);
+            tRecepcionesDet.setModel(model);
+            return null;
         }
     }
 

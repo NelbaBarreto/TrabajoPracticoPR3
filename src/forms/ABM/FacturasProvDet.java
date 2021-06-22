@@ -1,6 +1,7 @@
 package forms.ABM;
 
 import forms.Main;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -211,6 +212,8 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
 
     private void updateFacturaProvDet() {
         FacturaProvDet facturaProvDet = null;
+        main.setFacturasProvDet(new ArrayList<>());
+        
         int nroFacturaProv = Integer.parseInt(main.getTfNroFactProv().getText());
         int codigoProducto;
         String descripcion;

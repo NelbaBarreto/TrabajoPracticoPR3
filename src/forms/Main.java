@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +25,9 @@ import models.FacturaProvDet;
 import utils.Formulario;
 
 public class Main extends javax.swing.JFrame {
-    
-    private List<Empresa> empresas;
-    private List<FacturaProvDet> facturasProvDet;
+
+    private List<Empresa> empresas = new ArrayList<>();
+    private List<FacturaProvDet> facturasProvDet = new ArrayList<>();
     private static bdOracle conexion;
     private String msg;
 
@@ -66,8 +67,7 @@ public class Main extends javax.swing.JFrame {
     public void setTfNroFactProv(JTextField tfNroFactProv) {
         this.tfNroFactProv = tfNroFactProv;
     }
-        
-    
+
     public void run() {
         Main main = new Main(conexion);
         main.setVisible(true);
@@ -555,7 +555,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                     .addComponent(bEdit)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(bDelete2)))
-            .addGap(20, 20, 20)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(lEstado1)
@@ -798,7 +798,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         }
     }//GEN-LAST:event_bAddActionPerformed
 
-    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+    private void clear() {
         cxEmpresa.setSelectedIndex(0);
         tfNroFactProv.setText("");
         tfFecha.setText("");
@@ -806,6 +806,10 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         cxTipoFactura.setSelectedIndex(0);
         facturasProvDet = Formulario.FacturasProvDet.clearTable(tFacturaProvDet);
         tfTotal.setText("");
+    }
+
+    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+        clear();
     }//GEN-LAST:event_bCleanActionPerformed
 
     private void bConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarActionPerformed
@@ -817,7 +821,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                 // Nro. Factura Proveedor
                 int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
                 String query = "SELECT fapr_nro_factura_prov, TO_CHAR(fapr_fecha, 'dd/mm/yyyy'), fapr_estado, "
-                + "fapr_tipo_factura, fapr_id_empresa FROM facturas_prov WHERE fapr_nro_factura_prov = " + nroFacturaProv;
+                        + "fapr_tipo_factura, fapr_id_empresa FROM facturas_prov WHERE fapr_nro_factura_prov = " + nroFacturaProv;
 
                 ResultSet rset = conexion.sql(query);
 
@@ -851,14 +855,19 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         try {
             // Nro. Factura Proveedor
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            try {
-                conexion.sql("DELETE FROM facturas_prov_det WHERE fpde_nro_factura_prov = " + nroFacturaProv);
-            } catch (SQLException ex) {
-                Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+            
+            for (FacturaProvDet fpde : facturasProvDet) {
+                if (fpde.getItem() > 0) {
+                    if (conexion.fc_dele_factura_prov_det(fpde.getItem(), nroFacturaProv) == 1 ){
+                        System.out.println("Detalle eliminado correctamente");
+                    }
+                }
             }
+
             int response = conexion.fc_dele_factura_prov(nroFacturaProv);
             if (response == 1) {
                 msg = "Registro eliminado correctamente";
+                clear();
             } else {
                 msg = "No se pudo eliminar el registro";
             }
@@ -890,20 +899,28 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             int response = conexion.fc_actu_factura_prov(nroFacturaProv, fecha, estado, tipo, idEmpresa);
             if (response == 1) {
                 msg = "Registro actualizado correctamente";
+                for (FacturaProvDet fpde : facturasProvDet) {
+                    if (fpde.getItem() == 0) {
+                        if (conexion.fc_inse_factura_prov_det(conexion.recuSigteNumero("FACTURAS_PROV_DET", nroFacturaProv),
+                                fpde.getCantidad(), fpde.getImporte(), nroFacturaProv, fpde.getCodigoProducto()) == 1) {
+                            System.out.println("Detalle insertado correctamente");
+                        } else {
+                            System.out.println("Error al insertar detalle");
+                        }
+                    } else {
+                        if (conexion.fc_actu_factura_prov_det(fpde.getItem(),
+                                fpde.getCantidad(), fpde.getImporte(), nroFacturaProv, fpde.getCodigoProducto()) == 1) {
+                            System.out.println("Detalle actualizado correctamente");
+                        } else {
+                            System.out.println("Error al actualizar detalle");
+                        }
+                    }
+                }
+                Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
             } else {
                 msg = "No se pudo actualizar el registro";
             }
             Formulario.General.setMsg(response, lMsg, msg);
-
-            // Actualizar detalle
-            for (int i = 0; i < tFacturaProvDet.getRowCount(); i++) {
-                // Item, Cantidad, Importe, Nro_factura_prov, Cod_producto
-                conexion.fc_actu_factura_prov_det(Integer.parseInt(tFacturaProvDet.getValueAt(i, 0).toString()),
-                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 3).toString()),
-                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 4).toString()),
-                    nroFacturaProv,
-                    Integer.parseInt(tFacturaProvDet.getValueAt(i, 1).toString()));
-            }
         } catch (Exception ex) {
             msg = "No se pudo actualizar el registro";
             Formulario.General.setMsg(0, lMsg, msg);
@@ -922,11 +939,21 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             int estado = cxEstado.getSelectedIndex() + 1;
             // Tipo (1. CONTADO, 2. CREDITO)
             int tipo = cxTipoFactura.getSelectedIndex() + 1;
+            int nroFactProv = conexion.recuSigteNumero("FACTURAS_PROV");
 
-            int response = conexion.fc_inse_factura_prov(conexion.recuSigteNumero("FACTURAS_PROV"),
-                fecha, estado, tipo, idEmpresa);
+            int response = conexion.fc_inse_factura_prov(nroFactProv,
+                    fecha, estado, tipo, idEmpresa);
             if (response == 1) {
                 msg = "Registro insertado correctamente";
+                for (FacturaProvDet fpde : facturasProvDet) {
+                    if (conexion.fc_inse_factura_prov_det(conexion.recuSigteNumero("FACTURAS_PROV_DET", nroFactProv),
+                            fpde.getCantidad(), fpde.getImporte(), nroFactProv, fpde.getCodigoProducto()) == 1) {
+                        System.out.println("Detalle insertado correctamente");
+                    } else {
+                        System.out.println("Error al insertar detalle");
+                    }
+                }
+
             } else {
                 msg = "No se pudo insertar el registro";
             }

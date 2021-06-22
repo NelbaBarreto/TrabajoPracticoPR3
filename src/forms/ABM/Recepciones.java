@@ -5,7 +5,8 @@
  */
 package forms.ABM;
 
-import db.bdOracle;;
+import db.bdOracle;
+;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -13,16 +14,17 @@ import utils.Formulario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
-import javax.swing.JFrame;
-import models.FacturaProvDet;
+import models.RecepcionDet;
 
 /**
  *
  * @author Nelba Barreto
  */
+
+
 public class Recepciones extends javax.swing.JPanel {
 
-    private List<FacturaProvDet> facturasProvDet;
+    private List<RecepcionDet> recepcionesDet;
     private static bdOracle conexion;
     private String msg;
 
@@ -57,12 +59,11 @@ public class Recepciones extends javax.swing.JPanel {
         laNroFactProv = new javax.swing.JLabel();
         bClean = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tFacturaProvDet = new javax.swing.JTable();
+        tRecepcionDet = new javax.swing.JTable();
         bGenerarDetalle = new javax.swing.JButton();
         bDelete2 = new javax.swing.JButton();
         bEdit = new javax.swing.JButton();
         bAdd = new javax.swing.JButton();
-        bReload = new javax.swing.JButton();
 
         pEmpresas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -178,19 +179,14 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         }
     });
 
-    tFacturaProvDet.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    tFacturaProvDet.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null, null},
-            {null, null, null, null, null},
-            {null, null, null, null, null},
-            {null, null, null, null, null}
-        },
+    tRecepcionDet.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+    tRecepcionDet.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {},
         new String [] {
-            "Ítem", "Producto", "Descripción", "Cantidad", "Importe"
+            "Ítem", "Producto", "Descripción", "Cantidad"
         }
     ));
-    jScrollPane2.setViewportView(tFacturaProvDet);
+    jScrollPane2.setViewportView(tRecepcionDet);
 
     bGenerarDetalle.setBackground(new java.awt.Color(255, 255, 255));
     bGenerarDetalle.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -237,17 +233,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         }
     });
 
-    bReload.setBackground(new java.awt.Color(255, 255, 255));
-    bReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/reload.png"))); // NOI18N
-    bReload.setToolTipText("Agregar Nuevo ");
-    bReload.setBorder(null);
-    bReload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    bReload.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            bReloadActionPerformed(evt);
-        }
-    });
-
     javax.swing.GroupLayout pEmpresasLayout = new javax.swing.GroupLayout(pEmpresas);
     pEmpresas.setLayout(pEmpresasLayout);
     pEmpresasLayout.setHorizontalGroup(
@@ -255,9 +240,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         .addGroup(pEmpresasLayout.createSequentialGroup()
             .addGap(20, 20, 20)
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pEmpresasLayout.createSequentialGroup()
-                    .addComponent(laNroFactProv)
-                    .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pEmpresasLayout.createSequentialGroup()
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pEmpresasLayout.createSequentialGroup()
@@ -282,17 +264,10 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                                         .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(bGenerarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(pEmpresasLayout.createSequentialGroup()
-                                    .addComponent(bReload)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(bAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(bDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pEmpresasLayout.createSequentialGroup()
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(46, 46, 46)))))))
+                                .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGap(20, 20, 20))
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +277,12 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                             .addComponent(tfNroRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, 0)
                             .addComponent(bConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pEmpresasLayout.createSequentialGroup()
+                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(laNroFactProv)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE))))
     );
     pEmpresasLayout.setVerticalGroup(
         pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,9 +313,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addComponent(bGenerarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bReload)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addComponent(bAdd)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -377,7 +355,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         tfNroFactProv.setText("");
         tfFecha.setText("");
         tfNroRecepcion.setText("");
-        facturasProvDet = Formulario.FacturasProvDet.clearTable(tFacturaProvDet);
+        recepcionesDet = Formulario.Recepciones.clearTable(tRecepcionDet);
     }//GEN-LAST:event_bCleanActionPerformed
 
     private void bConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarActionPerformed
@@ -403,7 +381,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                         tfNroFactProv.setText(rset.getString(2));
                         tfFecha.setText(rset.getString(3));
                         tfFechaFactura.setText(rset.getString(4));
-                        facturasProvDet = Formulario.Recepciones.populateTable(tFacturaProvDet, nroRecepcion, conexion);
+                        recepcionesDet = Formulario.Recepciones.populateTable(tRecepcionDet, nroRecepcion, conexion);
                     } while (rset.next());
                 }
             }
@@ -422,7 +400,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         try {
             int nroRecepcion = Integer.parseInt(tfNroRecepcion.getText());
 
-            
             int response = conexion.fc_dele_recepciones(nroRecepcion);
             if (response == 1) {
                 tfNroRecepcion.setText("");
@@ -447,7 +424,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             String fechaFactura = tfFechaFactura.getText();
 
             int response = conexion.fc_actu_recepcion(nroRecepcion, nroFacturaProv, fecha,
-                fechaFactura);
+                    fechaFactura);
             if (response == 1) {
                 msg = "Registro actualizado correctamente";
             } else {
@@ -465,14 +442,14 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             String fecha = tfFecha.getText();
             int nroRecepcion = conexion.recuSigteNumero("RECEPCIONES");
 
-            int response = conexion.fc_inse_recepcion(nroRecepcion, 
+            int response = conexion.fc_inse_recepcion(nroRecepcion,
                     fecha, fecha, nroFacturaProv);
-            
-            for (FacturaProvDet temp : facturasProvDet) {
-                conexion.fc_inse_recepcion_det(conexion.recuSigteNumero("RECEPCIONES_DET", nroRecepcion), 
-                    temp.getCantidad(), nroRecepcion, temp.getCodigoProducto());
+
+            for (RecepcionDet temp : recepcionesDet) {
+                conexion.fc_inse_recepcion_det(conexion.recuSigteNumero("RECEPCIONES_DET", nroRecepcion),
+                        temp.getCantidad(), nroRecepcion, temp.getCodigoProducto());
             }
-                    
+
             if (response == 1) {
                 tfNroRecepcion.setText("");
                 tfNroFactProv.setText("");
@@ -492,7 +469,18 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     private void bGenerarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerarDetalleActionPerformed
         if (!tfNroFactProv.getText().equals("")) {
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet,
+            String query = "SELECT TO_CHAR(FAPR_FECHA, 'dd/mm/yyyy') FROM "
+                    + "facturas_prov where FAPR_NRO_FACTURA_PROV = " + nroFacturaProv;
+            try {
+                ResultSet rset = conexion.sql(query);
+                while (rset.next()) {
+                    tfFechaFactura.setText(rset.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            recepcionesDet = Formulario.Recepciones.populateTable2(tRecepcionDet,
                     nroFacturaProv, conexion);
             lMsg.setText("");
         } else {
@@ -504,17 +492,17 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
         if (!tfNroFactProv.getText().equals("")) {
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tFacturaProvDet.getSelectedRow();
+            int index = tRecepcionDet.getSelectedRow();
             if (index == -1) {
                 msg = "Seleccionar la fila que desea eliminar";
                 Formulario.General.setMsg(0, lMsg, msg);
             } else {
-                int item = facturasProvDet.get(index).getItem();
+                int item = recepcionesDet.get(index).getItem();
                 int response;
                 try {
                     response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
                     if (response == 1) {
-                        facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
+                        recepcionesDet = Formulario.Recepciones.populateTable(tRecepcionDet, nroFacturaProv, conexion);
                         msg = "Registro eliminado correctamente";
                     } else {
                         msg = "No se pudo eliminar el registro";
@@ -531,7 +519,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bDelete2ActionPerformed
 
     private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
-     /*   if (!tfNroFactProv.getText().equals("")) {
+        /*   if (!tfNroFactProv.getText().equals("")) {
             int EDITAR = 2;
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
             int index = tFacturaProvDet.getSelectedRow();
@@ -574,18 +562,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         }*/
     }//GEN-LAST:event_bAddActionPerformed
 
-    private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet,
-                    nroFacturaProv, conexion);
-            lMsg.setText("");
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
-            Formulario.General.setMsg(0, lMsg, msg);
-        }
-    }//GEN-LAST:event_bReloadActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
@@ -596,7 +572,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton bDelete2;
     private javax.swing.JButton bEdit;
     private javax.swing.JButton bGenerarDetalle;
-    private javax.swing.JButton bReload;
     private javax.swing.JButton bUpdate;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lMsg;
@@ -606,7 +581,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel laNroFactProv;
     private javax.swing.JLabel laNroRecepcion;
     private javax.swing.JPanel pEmpresas;
-    private javax.swing.JTable tFacturaProvDet;
+    private javax.swing.JTable tRecepcionDet;
     private javax.swing.JTextField tfFecha;
     private javax.swing.JTextField tfFechaFactura;
     private javax.swing.JTextField tfNroFactProv;
