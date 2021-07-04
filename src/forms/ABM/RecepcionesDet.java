@@ -1,6 +1,5 @@
 package forms.ABM;
 
-import forms.Main;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -9,20 +8,20 @@ import models.Producto;
 import utils.Formulario;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import models.FacturaProvDet;
+import models.RecepcionDet;
 
 /**
  *
  * @author Nelba Barreto
  */
-public class FacturasProvDet extends javax.swing.JPanel {
+public class RecepcionesDet extends javax.swing.JPanel {
 
     private List<Producto> productos;
     private String msg;
     private int operacion;
-    private Main main;
+    private Recepciones main;
 
-    public FacturasProvDet(int operacion, Main main) {
+    public RecepcionesDet(int operacion, Recepciones main) {
         this.operacion = operacion;
         this.main = main;
         initComponents();
@@ -41,12 +40,10 @@ public class FacturasProvDet extends javax.swing.JPanel {
         pEmpresas = new javax.swing.JPanel();
         laProducto = new javax.swing.JLabel();
         laCantidad = new javax.swing.JLabel();
-        tfImporte = new javax.swing.JTextField();
         bAceptar = new javax.swing.JButton();
         lMsg = new javax.swing.JLabel();
         cxProductos = new javax.swing.JComboBox<>();
         bMore = new javax.swing.JButton();
-        laCantidad1 = new javax.swing.JLabel();
         tfCantidad = new javax.swing.JTextField();
         bReload = new javax.swing.JButton();
 
@@ -58,63 +55,53 @@ public class FacturasProvDet extends javax.swing.JPanel {
         laCantidad.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         laCantidad.setText("Cantidad");
 
-        tfImporte.setBackground(new java.awt.Color(229, 232, 237));
-        tfImporte.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        tfImporte.setBorder(null);
-        tfImporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tfImporte.setBorder(BorderFactory.createCompoundBorder(
-            tfImporte.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        bAceptar.setBackground(new java.awt.Color(255, 255, 255));
+        bAceptar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        bAceptar.setText("Aceptar");
+        bAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
+        bAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bAceptar.setFocusPainted(false);
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAceptarActionPerformed(evt);
+            }
+        });
 
-    bAceptar.setBackground(new java.awt.Color(255, 255, 255));
-    bAceptar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-    bAceptar.setText("Aceptar");
-    bAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 52, 178)));
-    bAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    bAceptar.setFocusPainted(false);
-    bAceptar.addActionListener(new java.awt.event.ActionListener() {
+        lMsg.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+
+        cxProductos.setBackground(new java.awt.Color(229, 232, 237));
+        cxProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
+        cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
+        productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());
+
+        bMore.setBackground(new java.awt.Color(255, 255, 255));
+        bMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/more.png"))); // NOI18N
+        bMore.setToolTipText("Cargar Producto");
+        bMore.setBorder(null);
+        bMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bMore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMoreActionPerformed(evt);
+            }
+        });
+
+        tfCantidad.setBackground(new java.awt.Color(229, 232, 237));
+        tfCantidad.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        tfCantidad.setBorder(null);
+        tfCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tfCantidad.setBorder(BorderFactory.createCompoundBorder(
+            tfCantidad.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+    bReload.setBackground(new java.awt.Color(255, 255, 255));
+    bReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/reload.png"))); // NOI18N
+    bReload.setToolTipText("Agregar Nuevo ");
+    bReload.setBorder(null);
+    bReload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    bReload.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            bAceptarActionPerformed(evt);
+            bReloadActionPerformed(evt);
         }
-    });
-
-    lMsg.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-
-    cxProductos.setBackground(new java.awt.Color(229, 232, 237));
-    cxProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
-    cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));
-    productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());
-
-    bMore.setBackground(new java.awt.Color(255, 255, 255));
-    bMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/more.png"))); // NOI18N
-    bMore.setToolTipText("Cargar Producto");
-    bMore.setBorder(null);
-    bMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    bMore.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            bMoreActionPerformed(evt);
-        }
-    });
-
-    laCantidad1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-    laCantidad1.setText("Importe");
-
-    tfCantidad.setBackground(new java.awt.Color(229, 232, 237));
-    tfCantidad.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-    tfCantidad.setBorder(null);
-    tfCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    tfCantidad.setBorder(BorderFactory.createCompoundBorder(
-        tfCantidad.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
-bReload.setBackground(new java.awt.Color(255, 255, 255));
-bReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/reload.png"))); // NOI18N
-bReload.setToolTipText("Agregar Nuevo ");
-bReload.setBorder(null);
-bReload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-bReload.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bReloadActionPerformed(evt);
-    }
     });
 
     javax.swing.GroupLayout pEmpresasLayout = new javax.swing.GroupLayout(pEmpresas);
@@ -126,11 +113,9 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(laCantidad)
                 .addComponent(laProducto)
-                .addComponent(laCantidad1)
                 .addComponent(bReload))
             .addGap(18, 18, 18)
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(tfImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pEmpresasLayout.createSequentialGroup()
                     .addComponent(cxProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,11 +148,7 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
             .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addComponent(laCantidad)
                 .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(31, 31, 31)
-            .addGroup(pEmpresasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(tfImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(laCantidad1))
-            .addGap(55, 55, 55)
+            .addGap(115, 115, 115)
             .addComponent(lMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(bAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,64 +178,58 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
 
     private void setDefaultValues() {
         if (operacion == 2) {
-            int index = main.gettFacturaProvDet().getSelectedRow();
-            
-            int codigoProducto = Integer.parseInt(main.gettFacturaProvDet().getValueAt(index, 1).toString());
+            int index = main.gettRecepcionDet().getSelectedRow();
+
+            int codigoProducto = Integer.parseInt(main.gettRecepcionDet().getValueAt(index, 1).toString());
             int selectedProducto = Formulario.Productos.findProducto(codigoProducto, productos);
-            String cantidad = main.gettFacturaProvDet().getValueAt(index, 3).toString();
-            String importe = main.gettFacturaProvDet().getValueAt(index, 4).toString();
-            
+            String cantidad = main.gettRecepcionDet().getValueAt(index, 3).toString();
+
             tfCantidad.setText(cantidad);
-            tfImporte.setText(importe);
             cxProductos.setSelectedIndex(selectedProducto);
         }
     }
 
     private void updateFacturaProvDet() {
-        FacturaProvDet facturaProvDet = null;
-        main.setFacturasProvDet(new ArrayList<>());
-        int nroFacturaProv;
+        RecepcionDet recepcionDet = null;
+        main.setRecepcionesDet(new ArrayList<>());
+        int nroRecepcion;
         
         try {
-            nroFacturaProv = Integer.parseInt(main.getTfNroFactProv().getText());
-        } catch(Exception e) {
-            nroFacturaProv = 0;
+            nroRecepcion = Integer.parseInt(main.getTfNroRecepcion().getText());
+        } catch (Exception e) {
+            nroRecepcion = 0;
         }
-        
+
         int codigoProducto;
         String descripcion;
         int cantidad;
-        int importe;
 
-        for (int i = 0; i < main.gettFacturaProvDet().getRowCount(); i++) {
-            codigoProducto = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 1).toString());
-            descripcion = main.gettFacturaProvDet().getValueAt(i, 2).toString();
-            cantidad = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 3).toString());
-            importe = Integer.parseInt(main.gettFacturaProvDet().getValueAt(i, 4).toString());
+        for (int i = 0; i < main.gettRecepcionDet().getRowCount(); i++) {
+            codigoProducto = Integer.parseInt(main.gettRecepcionDet().getValueAt(i, 1).toString());
+            descripcion = main.gettRecepcionDet().getValueAt(i, 2).toString();
+            cantidad = Integer.parseInt(main.gettRecepcionDet().getValueAt(i, 3).toString());
 
-            facturaProvDet = new FacturaProvDet(0, nroFacturaProv, codigoProducto, cantidad, importe, descripcion);
-            main.getFacturasProvDet().add(facturaProvDet);
+            recepcionDet = new RecepcionDet(0, codigoProducto, cantidad, descripcion, nroRecepcion);
+            main.getRecepcionesDet().add(recepcionDet);
         }
     }
 
     private void createFacturaProvDetalle() {
-        DefaultTableModel model = (DefaultTableModel) main.gettFacturaProvDet().getModel();
+        DefaultTableModel model = (DefaultTableModel) main.gettRecepcionDet().getModel();
 
-        if (tfCantidad.getText().equals("") || tfImporte.getText().equals("")) {
+        if (tfCantidad.getText().equals("")) {
             msg = "Debe llenar todos los campos";
             Formulario.General.setMsg(0, lMsg, msg);
         } else {
             // Cantidad
-            String cantidad = tfCantidad.getText();
-            // Importe
-            String importe = tfImporte.getText();
+            int cantidad = Integer.parseInt(tfCantidad.getText());
             // Producto
             int index = cxProductos.getSelectedIndex();
             int codigoProducto = productos.get(index).getCodigo();
             String descripcion = productos.get(index).getDescripcion();
 
             model.insertRow(model.getRowCount(), new Object[]{0, codigoProducto, descripcion,
-                cantidad, importe});
+                cantidad});
             updateFacturaProvDet();
 
             close();
@@ -262,23 +237,20 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
     }
 
     private void editFacturaProvDetalle() {
-        DefaultTableModel model = (DefaultTableModel) main.gettFacturaProvDet().getModel();
-        int index = main.gettFacturaProvDet().getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) main.gettRecepcionDet().getModel();
+        int index = main.gettRecepcionDet().getSelectedRow();
 
         int codigoProducto = productos.get(cxProductos.getSelectedIndex()).getCodigo();
         String descripcion = productos.get(cxProductos.getSelectedIndex()).getDescripcion();
         String cantidad = tfCantidad.getText();
-        String importe = tfImporte.getText();
 
         model.setValueAt(codigoProducto, index, 1);
         model.setValueAt(descripcion, index, 2);
         model.setValueAt(cantidad, index, 3);
-        model.setValueAt(importe, index, 4);
-        
-        main.getFacturasProvDet().get(index).setCodigoProducto(codigoProducto);
-        main.getFacturasProvDet().get(index).setDescripcion(descripcion);
-        main.getFacturasProvDet().get(index).setCantidad(Integer.parseInt(cantidad));
-        main.getFacturasProvDet().get(index).setImporte(Integer.parseInt(importe));
+
+        main.getRecepcionesDet().get(index).setCodigoProducto(codigoProducto);
+        main.getRecepcionesDet().get(index).setDescripcion(descripcion);
+        main.getRecepcionesDet().get(index).setCantidad(Integer.parseInt(cantidad));
 
         close();
     }
@@ -313,10 +285,8 @@ bReload.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JComboBox<String> cxProductos;
     private javax.swing.JLabel lMsg;
     private javax.swing.JLabel laCantidad;
-    private javax.swing.JLabel laCantidad1;
     private javax.swing.JLabel laProducto;
     private javax.swing.JPanel pEmpresas;
     private javax.swing.JTextField tfCantidad;
-    private javax.swing.JTextField tfImporte;
     // End of variables declaration//GEN-END:variables
 }

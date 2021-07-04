@@ -290,7 +290,7 @@ public class bdOracle{
         cs.registerOutParameter(5, Types.INTEGER);
         cs.execute();
 
-        return cs.getInt(6);
+        return cs.getInt(5);
     }
     
     public int fc_dele_recepciones(int nro) throws SQLException {

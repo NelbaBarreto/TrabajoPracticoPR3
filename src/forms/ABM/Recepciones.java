@@ -6,7 +6,7 @@
 package forms.ABM;
 
 import db.bdOracle;
-;
+import javax.swing.JTable;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -14,23 +14,55 @@ import utils.Formulario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
 import models.RecepcionDet;
 
 /**
  *
  * @author Nelba Barreto
  */
-
-
 public class Recepciones extends javax.swing.JPanel {
 
     private List<RecepcionDet> recepcionesDet;
+
+    public JTextField getTfNroRecepcion() {
+        return tfNroRecepcion;
+    }
+
+    public void setTfNroRecepcion(JTextField tfNroRecepcion) {
+        this.tfNroRecepcion = tfNroRecepcion;
+    }
+
+    public List<RecepcionDet> getRecepcionesDet() {
+        return recepcionesDet;
+    }
+
+    public static bdOracle getConexion() {
+        return conexion;
+    }
+
+    public static void setConexion(bdOracle conexion) {
+        Recepciones.conexion = conexion;
+    }
+
+    public void setRecepcionesDet(List<RecepcionDet> recepcionesDet) {
+        this.recepcionesDet = recepcionesDet;
+    }
     private static bdOracle conexion;
     private String msg;
 
     public Recepciones(bdOracle bd) {
         conexion = bd;
         initComponents();
+    }
+
+    public JTable gettRecepcionDet() {
+        return tRecepcionDet;
+    }
+
+    public void settRecepcionDet(JTable tRecepcionDet) {
+        this.tRecepcionDet = tRecepcionDet;
     }
 
     /**
@@ -350,12 +382,16 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+    private void clear() {
         tfFechaFactura.setText("");
         tfNroFactProv.setText("");
         tfFecha.setText("");
         tfNroRecepcion.setText("");
         recepcionesDet = Formulario.Recepciones.clearTable(tRecepcionDet);
+    }
+
+    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+        clear();
     }//GEN-LAST:event_bCleanActionPerformed
 
     private void bConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarActionPerformed
@@ -364,7 +400,6 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 msg = "Número de Recepción no puede estar vacío";
                 Formulario.General.setMsg(0, lMsg, msg);
             } else {
-                // Código de Persona
                 int nroRecepcion = Integer.parseInt(tfNroRecepcion.getText());
                 String query = "SELECT rece_nro_recepcion, rece_nro_factura_prov, TO_CHAR(rece_fecha, 'dd/mm/yyyy'), "
                         + "TO_CHAR(rece_fec_fact, 'dd/mm/yyyy') FROM RECEPCIONES WHERE rece_nro_recepcion = " + nroRecepcion;
@@ -374,6 +409,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                 if (Formulario.General.resultSetIsEmpty(rset) == true) {
                     msg = "No se encuentra ninguna Recepción con ese código";
                     Formulario.General.setMsg(0, lMsg, msg);
+                    clear();
                 } else {
                     lMsg.setText("");
                     do {
@@ -400,12 +436,19 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         try {
             int nroRecepcion = Integer.parseInt(tfNroRecepcion.getText());
 
+            /* for (RecepcionDet rece : recepcionesDet) {
+                if (rece.getItem() > 0) {
+                    if (conexion.fc_dele_recepcion_det(rece.getItem(), nroRecepcion) == 1) {
+                        System.out.println("Detalle eliminado correctamente");
+                    }
+                }
+            }*/
+            String query = "DELETE FROM RECEPCIONES_DET WHERE rede_nro_recepcion = " + nroRecepcion;
+            conexion.sql(query);
+
             int response = conexion.fc_dele_recepciones(nroRecepcion);
             if (response == 1) {
-                tfNroRecepcion.setText("");
-                tfNroFactProv.setText("");
-                tfFecha.setText("");
-                tfFechaFactura.setText("");
+                clear();
                 msg = "Registro eliminado correctamente";
             } else {
                 msg = "No se pudo eliminar el registro";
@@ -427,6 +470,24 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                     fechaFactura);
             if (response == 1) {
                 msg = "Registro actualizado correctamente";
+                for (RecepcionDet rede : recepcionesDet) {
+                    if (rede.getItem() == 0) {
+                        if (conexion.fc_inse_recepcion_det(conexion.recuSigteNumero("RECEPCIONES_DET", nroRecepcion),
+                                rede.getCantidad(), nroRecepcion, rede.getCodigoProducto()) == 1) {
+                            System.out.println("Detalle insertado correctamente");
+                        } else {
+                            System.out.println("Error al insertar detalle");
+                        }
+                    } else {
+                        if (conexion.fc_actu_recepcion_det(rede.getItem(),
+                                rede.getCantidad(), nroRecepcion, rede.getCodigoProducto()) == 1) {
+                            System.out.println("Detalle actualizado correctamente");
+                        } else {
+                            System.out.println("Error al actualizar detalle");
+                        }
+                    }
+                }
+                Formulario.Recepciones.populateTable(tRecepcionDet, nroRecepcion, conexion);
             } else {
                 msg = "No se pudo actualizar el registro";
             }
@@ -444,22 +505,22 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
 
             int response = conexion.fc_inse_recepcion(nroRecepcion,
                     fecha, fecha, nroFacturaProv);
-
-            for (RecepcionDet temp : recepcionesDet) {
-                conexion.fc_inse_recepcion_det(conexion.recuSigteNumero("RECEPCIONES_DET", nroRecepcion),
-                        temp.getCantidad(), nroRecepcion, temp.getCodigoProducto());
-            }
-
             if (response == 1) {
-                tfNroRecepcion.setText("");
-                tfNroFactProv.setText("");
-                tfFecha.setText("");
-                tfFechaFactura.setText("");
                 msg = "Registro insertado correctamente";
+                for (RecepcionDet rede : recepcionesDet) {
+                    if (conexion.fc_inse_recepcion_det(conexion.recuSigteNumero("RECEPCIONES_DET", nroRecepcion), rede.getCantidad(),
+                            nroRecepcion, rede.getCodigoProducto()) == 1) {
+                        System.out.println("Detalle insertado correctamente");
+                    } else {
+                        System.out.println("Error al insertar detalle");
+                    }
+                }
+                clear();
             } else {
                 msg = "No se pudo insertar el registro";
             }
             Formulario.General.setMsg(response, lMsg, msg);
+            Formulario.Recepciones.populateTable(tRecepcionDet, nroRecepcion, conexion);
 
         } catch (SQLException ex) {
             Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
@@ -490,7 +551,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bGenerarDetalleActionPerformed
 
     private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
+        if (!tfNroRecepcion.getText().equals("")) {
             int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
             int index = tRecepcionDet.getSelectedRow();
             if (index == -1) {
@@ -519,47 +580,38 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bDelete2ActionPerformed
 
     private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
-        /*   if (!tfNroFactProv.getText().equals("")) {
-            int EDITAR = 2;
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tFacturaProvDet.getSelectedRow();
+        int EDITAR = 2;
+        int index = tRecepcionDet.getSelectedRow();
 
-            if (index == -1) {
-                msg = "Seleccionar la fila que desea editar";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                int item = facturasProvDet.get(index).getItem();
-
-                JFrame frame = new JFrame();
-                FacturasProvDet pAddFacturaProvDet = new Recepciones(conexion, nroFacturaProv, EDITAR, item);
-                frame.add(pAddFacturaProvDet);
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(400, 400);
-                frame.setLocationRelativeTo(null);
-            }
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+        if (index == -1) {
+            msg = "Seleccionar la fila que desea editar";
             Formulario.General.setMsg(0, lMsg, msg);
-        }*/
+        } else {
+            JFrame frame = new JFrame();
+            RecepcionesDet pAddFacturaProvDet = new RecepcionesDet(EDITAR, this);
+            frame.add(pAddFacturaProvDet);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(400, 400);
+            frame.setLocationRelativeTo(null);
+        }
     }//GEN-LAST:event_bEditActionPerformed
 
     private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
-        /*if (!tfNroFactProv.getText().equals("")) {
+        if (!tfNroFactProv.getText().equals("")) {
             int INSERTAR = 1;
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
 
             JFrame frame = new JFrame();
-            AddFacturaProvDet pAddFacturaProvDet = new AddFacturaProvDet(conexion, nroFacturaProv, INSERTAR, 0);
+            RecepcionesDet pAddFacturaProvDet = new RecepcionesDet(INSERTAR, this);
             frame.add(pAddFacturaProvDet);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setSize(400, 400);
             frame.setLocationRelativeTo(null);
         } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+            msg = "Nro. Recepción no puede estar vacío";
             Formulario.General.setMsg(0, lMsg, msg);
-        }*/
+        }
     }//GEN-LAST:event_bAddActionPerformed
 
 
