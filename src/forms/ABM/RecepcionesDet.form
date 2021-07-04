@@ -47,12 +47,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="laCantidad" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="laProducto" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="laCantidad1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="bReload" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="tfImporte" min="-2" pref="105" max="-2" attributes="0"/>
                       <Component id="tfCantidad" min="-2" pref="105" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="cxProductos" min="-2" pref="180" max="-2" attributes="0"/>
@@ -97,12 +95,7 @@
                       <Component id="laCantidad" min="-2" max="-2" attributes="0"/>
                       <Component id="tfCantidad" min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfImporte" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="laCantidad1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
                   <Component id="lMsg" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="bAceptar" min="-2" pref="28" max="-2" attributes="0"/>
@@ -127,25 +120,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cantidad"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="tfImporte">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ed" green="e8" red="e5" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto" size="12" style="0"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfImporte.setBorder(BorderFactory.createCompoundBorder(&#xa;    tfImporte.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="bAceptar">
           <Properties>
@@ -196,7 +170,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;productos = Formulario.Productos.populateComboBox(cxProductos, conexion);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -219,14 +193,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMoreActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="laCantidad1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Importe"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfCantidad">
           <Properties>

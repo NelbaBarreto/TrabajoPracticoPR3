@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/ABM/Recepciones.java</file>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/utils/Formulario.java</file>
-            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/models/FacturaProvDet.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/models/RecepcionDet.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/ABM/FacturasProvDet.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/ABM/Productos.java</file>
+            <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/ABM/RecepcionesDet.java</file>
             <file>file:/E:/Users/HP/Documents/NetBeansProjects/trabajo_practico/src/forms/Main.java</file>
         </group>
     </open-files>

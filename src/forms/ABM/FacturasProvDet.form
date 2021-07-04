@@ -196,7 +196,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;productos = Formulario.Productos.populateComboBox(cxProductos, conexion);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="cxProductos.setPreferredSize(new java.awt.Dimension(1, 15));&#xa;productos = Formulario.Productos.populateComboBox(cxProductos, main.getConexion());"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
