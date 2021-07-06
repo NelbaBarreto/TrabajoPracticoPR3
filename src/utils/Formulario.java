@@ -146,6 +146,18 @@ public class Formulario {
             tFacturaProvDet.setModel(model);
             return null;
         }
+
+        public static boolean detalleExists(int item, JTable tFacturaProvDet) {
+            for (int i = 0; i < tFacturaProvDet.getRowCount(); i++) {  
+                int tItem = Integer.parseInt(String.valueOf(tFacturaProvDet.getValueAt(i, 0)));
+                System.out.println("item " + item);
+                System.out.println("tItem " + tItem);
+                if(item == tItem) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public static class Productos {

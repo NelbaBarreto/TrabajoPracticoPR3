@@ -1,0 +1,15 @@
+TRIGGERS
+- TRG_FACTURA_PROV
+ * No permitir que se actualicen ni borren facturas proveedor que ya están recepcionadas.
+- TRG_FACTURA_PROV_DET
+ * No permitir que se actualicen ni borren detalles de facturas proveedor que ya están recepcionadas.
+- TRG_RECEPCIONES_DET
+ * Actualizar existencias al crear/borrar detalles de recepciones.
+ * No permitir editar detalle de recepción.
+ * Controlar que no se permita ingresar producto con cantidad cero.
+- TRIGGER_RECEPCIONES
+ * No permitir actualizar número de factura proveedor.
+
+FALTA CORREGIR:
+- Editar factura proveedor detalle
+- No permitir recepcionar una factura cancelada o anulada

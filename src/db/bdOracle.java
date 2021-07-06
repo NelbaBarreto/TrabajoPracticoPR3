@@ -334,7 +334,7 @@ public class bdOracle{
     
     public int fc_dele_recepcion_det(int item, int nroRecepcion) throws SQLException {
         CallableStatement cs = null;
-        cs = conn.prepareCall("{ call PC_DELE_FACTURA_PROV_DET(?, ?, ?) }");
+        cs = conn.prepareCall("{ call PC_DELE_RECEPCION_DET(?, ?, ?) }");
         cs.setInt(1, item);
         cs.setInt(2, nroRecepcion);
         cs.registerOutParameter(3, Types.INTEGER);

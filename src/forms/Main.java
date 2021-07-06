@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import models.Empresa;
 import models.FacturaProvDet;
 import utils.Formulario;
@@ -125,7 +126,6 @@ public class Main extends javax.swing.JFrame {
         bAdd = new javax.swing.JButton();
         bEdit = new javax.swing.JButton();
         bDelete2 = new javax.swing.JButton();
-        bReload = new javax.swing.JButton();
         pCaja = new javax.swing.JPanel();
         tpSCaja = new javax.swing.JTabbedPane();
         pFacturaVenta = new javax.swing.JPanel();
@@ -462,17 +462,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         }
     });
 
-    bReload.setBackground(new java.awt.Color(255, 255, 255));
-    bReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/reload.png"))); // NOI18N
-    bReload.setToolTipText("Agregar Nuevo ");
-    bReload.setBorder(null);
-    bReload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    bReload.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            bReloadActionPerformed(evt);
-        }
-    });
-
     javax.swing.GroupLayout pFacturaProvLayout = new javax.swing.GroupLayout(pFacturaProv);
     pFacturaProv.setLayout(pFacturaProvLayout);
     pFacturaProvLayout.setHorizontalGroup(
@@ -531,19 +520,13 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                                 .addComponent(bDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(0, 0, Short.MAX_VALUE)))
                     .addGap(23, 23, 23))))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFacturaProvLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(bReload)
-            .addGap(71, 71, 71))
     );
     pFacturaProvLayout.setVerticalGroup(
         pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pFacturaProvLayout.createSequentialGroup()
             .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pFacturaProvLayout.createSequentialGroup()
-                    .addGap(19, 19, 19)
-                    .addComponent(bReload)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGap(46, 46, 46)
                     .addGroup(pFacturaProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(laEmpresa)
                         .addComponent(cxEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -696,6 +679,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                 if (response == 1) {
                     lEmpresa.clearSelection();
                     empresas = Formulario.Empresas.populateList(lEmpresa, conexion);
+                    Formulario.Empresas.populateComboBox(cxEmpresa, conexion);
                     tfDescripcion.setText("");
                     tfId.setText("");
                     msg = "Registro insertado correctamente";
@@ -717,6 +701,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             int response = conexion.fc_actu_empresa(id, descripcion);
             if (response == 1) {
                 empresas = Formulario.Empresas.populateList(lEmpresa, conexion);
+                Formulario.Empresas.populateComboBox(cxEmpresa, conexion);
                 msg = "Registro actualizado correctamente";
             } else {
                 msg = "No se pudo actualizar el registro";
@@ -735,6 +720,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             if (response == 1) {
                 lEmpresa.clearSelection();
                 empresas = Formulario.Empresas.populateList(lEmpresa, conexion);
+                Formulario.Empresas.populateComboBox(cxEmpresa, conexion);
                 tfDescripcion.setText("");
                 tfId.setText("");
                 msg = "Registro eliminado correctamente";
@@ -748,31 +734,12 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bDelete1ActionPerformed
 
     private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
-        if (!tfNroFactProv.getText().equals("")) {
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tFacturaProvDet.getSelectedRow();
-            if (index == -1) {
-                msg = "Seleccionar la fila que desea eliminar";
-                Formulario.General.setMsg(0, lMsg, msg);
-                int item = facturasProvDet.get(index).getItem();
-                int response;
-                try {
-                    response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
-                    if (response == 1) {
-                        facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
-                        tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
-                        msg = "Registro eliminado correctamente";
-                    } else {
-                        msg = "No se pudo eliminar el registro";
-                    }
-                    Formulario.General.setMsg(response, lMsg, msg);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+        int index = tFacturaProvDet.getSelectedRow();
+        if (index == -1) {
+            msg = "Seleccionar la fila que desea eliminar";
             Formulario.General.setMsg(0, lMsg, msg);
+        } else {
+            ((DefaultTableModel) tFacturaProvDet.getModel()).removeRow(index);
         }
     }//GEN-LAST:event_bDelete2ActionPerformed
 
@@ -818,6 +785,8 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
         cxEstado.setSelectedIndex(0);
         cxTipoFactura.setSelectedIndex(0);
         facturasProvDet = Formulario.FacturasProvDet.clearTable(tFacturaProvDet);
+        lMsg.setText("");
+        lMsg1.setText("");
         tfTotal.setText("");
     }
 
@@ -893,7 +862,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             msg = "No se pudo eliminar el registro";
             Formulario.General.setMsg(0, lMsg, msg);
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
-        };
+        }
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
@@ -920,6 +889,12 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                         } else {
                             System.out.println("Error al insertar detalle");
                         }
+                    } else if (!Formulario.FacturasProvDet.detalleExists(fpde.getItem(), tFacturaProvDet)) {
+                        if (conexion.fc_dele_factura_prov_det(fpde.getItem(), fpde.getNroFacturaProv()) == 1) {
+                            System.out.println("Detalle eliminado correctamente");
+                        } else {
+                            System.out.println("Error al eliminar detalle");
+                        }
                     } else {
                         if (conexion.fc_actu_factura_prov_det(fpde.getItem(),
                                 fpde.getCantidad(), fpde.getImporte(), nroFacturaProv, fpde.getCodigoProducto()) == 1) {
@@ -929,7 +904,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                         }
                     }
                 }
-                Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
+                facturasProvDet = Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFacturaProv, conexion);
                 tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
             } else {
                 msg = "No se pudo actualizar el registro";
@@ -967,9 +942,7 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
                         System.out.println("Error al insertar detalle");
                     }
                 }
-                Formulario.FacturasProvDet.populateTable(tFacturaProvDet, nroFactProv, conexion);
-                tfTotal.setText(String.valueOf(Formulario.FacturasProvDet.calcularTotal(facturasProvDet)));
-
+                clear();
             } else {
                 msg = "No se pudo insertar el registro";
             }
@@ -980,10 +953,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         };
     }//GEN-LAST:event_bCreateActionPerformed
-
-    private void bReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReloadActionPerformed
-        empresas = Formulario.Empresas.populateList(lEmpresa, conexion);
-    }//GEN-LAST:event_bReloadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -998,7 +967,6 @@ bCreate.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton bDelete1;
     private javax.swing.JButton bDelete2;
     private javax.swing.JButton bEdit;
-    private javax.swing.JButton bReload;
     private javax.swing.JButton bUpdate;
     private javax.swing.JButton bUpdate1;
     private javax.swing.JComboBox<String> cxEmpresa;

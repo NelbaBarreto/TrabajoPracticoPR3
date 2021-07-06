@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import models.RecepcionDet;
 
 /**
@@ -433,30 +434,29 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bConsultarActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+        int response = 0;
         try {
             int nroRecepcion = Integer.parseInt(tfNroRecepcion.getText());
 
-            /* for (RecepcionDet rece : recepcionesDet) {
+            for (RecepcionDet rece : recepcionesDet) {
                 if (rece.getItem() > 0) {
                     if (conexion.fc_dele_recepcion_det(rece.getItem(), nroRecepcion) == 1) {
                         System.out.println("Detalle eliminado correctamente");
                     }
                 }
-            }*/
-            String query = "DELETE FROM RECEPCIONES_DET WHERE rede_nro_recepcion = " + nroRecepcion;
-            conexion.sql(query);
-
-            int response = conexion.fc_dele_recepciones(nroRecepcion);
+            }
+            response = conexion.fc_dele_recepciones(nroRecepcion);
             if (response == 1) {
                 clear();
                 msg = "Registro eliminado correctamente";
             } else {
                 msg = "No se pudo eliminar el registro";
             }
-            Formulario.General.setMsg(response, lMsg, msg);
         } catch (SQLException ex) {
+            msg = "No se pudo eliminar el registro";
             Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Formulario.General.setMsg(response, lMsg, msg);
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
@@ -523,7 +523,9 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
             Formulario.Recepciones.populateTable(tRecepcionDet, nroRecepcion, conexion);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
+            msg = "No se pudo insertar el registro";
+            Formulario.General.setMsg(0, lMsg, msg);
+            // Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bCreateActionPerformed
 
@@ -534,8 +536,13 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
                     + "facturas_prov where FAPR_NRO_FACTURA_PROV = " + nroFacturaProv;
             try {
                 ResultSet rset = conexion.sql(query);
-                while (rset.next()) {
-                    tfFechaFactura.setText(rset.getString(1));
+                if (Formulario.General.resultSetIsEmpty(rset) == true) {
+                    msg = "No se encuentra ningún Detalle con ese número de Factura Proveedor";
+                    Formulario.General.setMsg(0, lMsg, msg);
+                } else {
+                    do {
+                        tfFechaFactura.setText(rset.getString(1));
+                    } while (rset.next());
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
@@ -551,31 +558,12 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_bGenerarDetalleActionPerformed
 
     private void bDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelete2ActionPerformed
-        if (!tfNroRecepcion.getText().equals("")) {
-            int nroFacturaProv = Integer.parseInt(tfNroFactProv.getText());
-            int index = tRecepcionDet.getSelectedRow();
-            if (index == -1) {
-                msg = "Seleccionar la fila que desea eliminar";
-                Formulario.General.setMsg(0, lMsg, msg);
-            } else {
-                int item = recepcionesDet.get(index).getItem();
-                int response;
-                try {
-                    response = conexion.fc_dele_factura_prov_det(item, nroFacturaProv);
-                    if (response == 1) {
-                        recepcionesDet = Formulario.Recepciones.populateTable(tRecepcionDet, nroFacturaProv, conexion);
-                        msg = "Registro eliminado correctamente";
-                    } else {
-                        msg = "No se pudo eliminar el registro";
-                    }
-                    Formulario.General.setMsg(response, lMsg, msg);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Recepciones.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            msg = "Nro. Factura Proveedor no puede estar vacío";
+        int index = tRecepcionDet.getSelectedRow();
+        if (index == -1) {
+            msg = "Seleccionar la fila que desea eliminar";
             Formulario.General.setMsg(0, lMsg, msg);
+        } else {
+            ((DefaultTableModel) tRecepcionDet.getModel()).removeRow(index);
         }
     }//GEN-LAST:event_bDelete2ActionPerformed
 

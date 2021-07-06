@@ -372,6 +372,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
 
                 if (Formulario.General.resultSetIsEmpty(rset) == true) {
                     msg = "No se encuentra ninguna Persona con ese código";
+                    clear();
                     Formulario.General.setMsg(0, lMsg, msg);
                 } else {
                     lMsg.setText("");
@@ -489,7 +490,7 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         ciudades = Formulario.Ciudades.populateComboBox(cxCiudades, conexion);
     }//GEN-LAST:event_bReloadActionPerformed
 
-    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+    private void clear() {
         cxCiudades.setSelectedIndex(0);
         tfApellido1.setText("");
         tfApellido2.setText("");
@@ -497,6 +498,10 @@ bConsultar.addActionListener(new java.awt.event.ActionListener() {
         tfNombre2.setText("");
         tfCedula.setText("");
         tfCodPersona.setText("");
+    }
+    
+    private void bCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCleanActionPerformed
+        clear();
     }//GEN-LAST:event_bCleanActionPerformed
 
 
